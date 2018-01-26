@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}{{ (admin.module ~ '.' ~ admin.action)|trans() }}{% endblock %}</title>
+    {% block stylesheets %}
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="{{ asset('bundles/adminbundle/css/bootstrap.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/adminbundle/css/bootstrap-grid.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/adminbundle/css/bootstrap-reboot.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/adminbundle/css/AdminLTE.min.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/adminbundle/css/skins/_all-skins.min.css') }}">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+
+        <link rel="stylesheet" href="{{ asset('bundles/adminbundle/css/colors.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/adminbundle/css/layout.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/adminbundle/css/tree.css') }}" type="text/css" media="all" />
+        <link rel="stylesheet" href="{{ asset('bundles/adminbundle/css/styles.css') }}" type="text/css" media="all" />
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body class="skin-blue sidebar-mini">
+<div class="wrapper">
+    {% set currentPath = path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')) %}
+    {% block admin_header %}
+        <header class="main-header admin-bc">
+            <a href="/" class="logo" target="_blank" >
+                <span class="logo-lg">
+                    <img src="/placeholder.svg" alt="" title="На главную"/>
+                </span>
+            </a>
+            {% block admin_nav %}
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <div class="navbar-left">
+                        {% block admin_breadcrumb %}
+                            <div class="hidden-xs">
+                                {% if admin.breadcrumbs %}
+                                    <ol class="nav navbar-top-links breadcrumb">
+                                        {% for item in admin.breadcrumbs %}
+                                            <li><a href="{{ item.url }}">{{ item.title|trans }}</a></li>
+                                            {% if not loop.last%}
+                                                <li><a>|</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ol>
+                                {% endif %}
+                            </div>
+                        {% endblock admin_breadcrumb %}
+                    </div>
+                </nav>
+            {% endblock %}
+        </header>
+    {% endblock %}
+
+
+    {% block admin_wrapper %}
+        {% block admin_left_side %}
+            <aside class="main-sidebar">
+                <section class="sidebar">
+                    {% block admin_side_nav %}
+                        <ul class="sidebar-menu">
+                            {% if admin.menuGroups %}
+                                {% for title, group in admin.menuGroups %}
+                                    {% if group %}
+                                        <li class="treeview {{ title == admin.menuGroupActive ? 'active' : '' }}">
+                                            <a>
+                                                <i class="fa fa-folder"></i>
+                                                <span>{{ title|trans }}</span>
+                                                <span class="pull-right-container">
+                                              <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                            </a>
+                                            <ul class="treeview-menu" >
+                                                {% for item in group %}
+                                                    <li class="{{ item.active ? 'active' : '' }}"><a href="{{ item.url }}"><i class="fa fa-circle-o"></i> {{ item.title|trans }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            {% if admin.menuElements %}
+                                {% for item in admin.menuElements %}
+                                    <li class="{{ currentPath == item.url ? 'active' : '' }}" ><a href="{{ item.url }}"><i class="fa fa-circle-o"></i> {{ item.title|trans }}</a></li>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+
+                    {% endblock admin_side_nav %}
+                </section>
+            </aside>
+        {% endblock admin_left_side %}
+
+        <div class="content-wrapper">
+            {% block admin_page_content %}
+                <section class="messages">
+                    {% block admin_page_content_messages %}
+                        {% if admin.error %}
+                            <div class="error-content">
+                            {% for error in admin.error %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if admin.warning %}
+                            <div class="warning-content">
+                                {% for w in admin.warning %}
+                                    <p>{{ w }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if admin.notification %}
+                            <div class="notification-content">
+                                {% for nt in admin.notification %}
+                                    <p>{{ nt }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endblock admin_page_content_messages %}
+                </section>
+
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="navbar-collapse">
+                            {% block admin_page_content_header %}
+                                <span style="font-size: 26px;">{{ (admin.module ~ '.' ~ admin.action)|trans() }}</span>
+                            {% endblock admin_page_content_header %}
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content">
+
+                    {% block admin_page_content_content %}
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                            </div>
+                        </div>
+                    {% endblock admin_page_content_content %}
+
+                    {% block admin_page_conten_footer %}
+                        {% if (admin.ContentFooterElements is defined and admin.ContentFooterElements is iterable) %}
+                            {% for row in admin.ContentFooterElements %}
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="box box-primary">
+                                            <div class="box-body table-responsive text-center">
+                                                {% if row.title is defined and row.title %}
+                                                    <h3>{{ row.title }}</h3>
+                                                {% endif %}
+                                                {% if row.content is defined and row.content %}
+                                                    {{ row.content|raw }}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endblock admin_page_conten_footer %}
+                </section>
+            {% endblock admin_page_content %}
+        </div>
+    {% endblock admin_wrapper %}
+</div>
+
+{% block javascripts %}
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+    <script
+            src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+            integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.js?lang=ru"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/ru.js"></script>
+    <script src="{{ asset('bundles/adminbundle/js/bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/adminbundle/js/app.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/adminbundle/js/admin.js') }}" type="text/javascript"></script>
+{% endblock %}
+</body>
+</html>

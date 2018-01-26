@@ -1,0 +1,33 @@
+{% if admin.data.pager is defined and admin.data.pager is iterable %}
+    <div class="text-center">
+        <ul class="pagination pagination-sm no-margin pull-right">
+            {% set urlParams = app.request.attributes.get('_route_params')|merge(app.request.query.all) %}
+            {% for page in admin.data.pager %}
+                {% if page.type == constant('AdminBundle\\Service\\PagerService::TYPE_L_ARROW') %}
+                    <li>
+                        <a class="btn btn-sm btn-default" href="{{ path(app.request.attributes.get('_route'), urlParams|merge({'_page': page.id })) }}"><</a>
+                    </li>
+                {% elseif page.type == constant('AdminBundle\\Service\\PagerService::TYPE_R_ARROW') %}
+
+                    <li>
+                        <a class="btn btn-sm btn-default" href="{{ path(app.request.attributes.get('_route'), urlParams|merge({'_page': page.id })) }}">></a>
+                    </li>
+                {% else %}
+
+                    {% if page.active or page.type == constant('AdminBundle\\Service\\PagerService::TYPE_DOTS') %}
+                        <li class="{{ page.active?'active':'' }}">
+                            <a class="btn active btn-sm btn-default" >{{ page.title }}</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a class="btn btn-sm btn-default" href="{{ path(app.request.attributes.get('_route'), urlParams|merge({'_page': page.id })) }}">
+                                {{ page.title }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+         </ul>
+    </div>
+{% endif %}

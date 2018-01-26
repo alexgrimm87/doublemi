@@ -1,0 +1,66 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block wrap_class %}category-filter{% endblock %}
+
+{% block content %}
+    <section class="wrap-category">
+        <div class="mbox2">
+            <form method="get">
+                <input type="hidden" name="q" value="{{ q }}" />
+                <div class="sorting-wrap">
+                    <div class="title"><h1>{{ page_title|trans }}</h1></div>
+                    <div class="sorting">
+                        <div class="sort-item">
+                            <span>Сортировка:</span>
+                            <select name="_sort" class="sort-by js_select">
+                                {% for key,par in sortParams %}
+                                    <option value="{{ key ~ '_' ~ par.order }}" {{ sortParamsActive.sort == key and sortParamsActive.order == par.order ? 'selected="selected"' : '' }}>
+                                        {{ par.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="sort-item">
+                            <span>Показать:</span>
+                            <select name="_limit" class="number js_select">
+                                {% for l in limitParams %}
+                                    <option value="{{ l }}" {{ l == limitParamsActive ? 'selected="selected"' : '' }}>{{ l }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="sales-list">
+                {% if objects.items %}
+                    <ul>
+                        {% for item in objects.items  %}
+                            {% set route_name = item.catalogSection.main ? 'catalog_main_section_product' : 'catalog_unmain_section_product' %}
+                            <li>
+                                <div class="sale-item">
+                                    <div class="visible-overlay">
+                                        <a href="{{ path(route_name, {section_code: item.catalogSection.code, product_code: item.code}) }}" class="to-category">
+                                            <span class="pic">
+                                                <img src="{{ item.picture?item.picture|imagine_filter('product_block'):image_placeholder }}" alt="">
+                                            </span>
+                                            <p>{{ item.title }}</p>
+                                            <span class="price">{{ item.price|price }}</span>
+                                        </a>
+                                        <a href="{{ path(route_name, {section_code: item.catalogSection.code, product_code: item.code}) }}" class="to-basket el-button">
+                                            Подробнее
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    Поиск не дал результатов
+                {% endif %}
+            </div>
+
+            {% include 'MainBundle:Default:pagination.html.twig' %}
+
+        </div>
+    </section>
+{% endblock content %}

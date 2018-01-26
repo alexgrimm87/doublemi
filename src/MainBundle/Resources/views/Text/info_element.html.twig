@@ -1,0 +1,12 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <div class="mbox2">
+        <div class="blog-inner">
+            <h1>{{ object.title }}</h1>
+            <div class="blog-content">
+                {{ object.text|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

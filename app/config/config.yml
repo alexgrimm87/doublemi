@@ -1,0 +1,226 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@UserBundle/Resources/config/services.yml" }
+    - { resource: "@MainBundle/Resources/config/services.yml" }
+    - { resource: "@AdminBundle/Resources/config/services.yml" }
+    - { resource: "@BlogBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: ru
+    mailing_step_count: 20
+    menu:
+        index:                    menu.index
+        akcii_root:               menu.akcii_root
+        catalog_main_root:        menu.catalog_main_root
+        catalog_unmain_root:      menu.catalog_unmain_root
+        contact_page:             menu.contact_page
+        feedback_root:            menu.feedback_root
+        fos_user_profile_show:    menu.fos_user_profile_show
+        blog_root:                menu.blog
+        blog_archive:             menu.blog_archive
+        portfolio_root:           menu.portfolio
+        route_individual:         menu.individual
+        route_bouquet_subscribe:  menu.bouquetsubscribe
+        search:                   menu.search
+
+framework:
+    #esi: ~
+    translator: { fallbacks: ['%locale%'] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.root_dir%/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    trusted_proxies: ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        handler_id: ~
+    fragments: ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    exception_controller:  main.exception_controller:showException
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        seo:                               '@main.seo'
+        site_menu:                         '@main.menu'
+        image_placeholder:                 "/placeholder.svg"
+        filebrowserBrowseRoute :           "youwe_file_manager_list"
+        filebrowserBrowseRouteParameters : { popup : "1" }
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: '%kernel.root_dir%/data/data.db3'
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path: '%database_path%'
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    spool: { type: memory }
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: UserBundle\Entity\User
+    registration:
+        form:
+            type:     UserBundle\Form\RegistrationType
+            handler:  user.form.handler.registration
+        confirmation:
+            enabled:    true
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: true
+    bundles:        [ YouweFileManagerBundle ]
+    filters:
+        cssrewrite: ~
+
+youwe_file_manager:
+    upload_path: %kernel.root_dir%/../web/upload
+    full_exception: false
+    theme:
+        css: "/bundles/youwefilemanager/css/simple/light.css"
+        template: "YouweFileManagerBundle:FileManager:file_manager.html.twig"
+    mime_allowed:
+        - 'image/png'
+        - 'image/jpg'
+        - 'image/jpeg'
+        - 'image/gif'
+        - 'application/pdf'
+        - 'application/ogg'
+        - 'video/mp4'
+        - 'application/zip'
+        - 'multipart/x-zip'
+        - 'application/rar'
+        - 'application/x-rar-compressed'
+        - 'application/x-zip-compressed'
+        - 'application/tar'
+        - 'application/x-tar'
+        - 'text/plain'
+        - 'text/x-asm'
+        - 'application/octet-stream'
+
+ivory_ck_editor:
+    default_config: base
+    configs:
+        my_config:
+            toolbar: full
+        base:
+            bodyClass:                         "blog-content"
+            contentsCss:                       "/styles/blog.css"
+            filebrowserBrowseRoute :           "youwe_file_manager_list"
+            filebrowserBrowseRouteParameters : { popup : "1" }
+            filebrowserBrowseRouteType :       3
+            toolbar:
+                - ["Source","-","Maximize","-","Preview","Print","-","Templates"]
+                - ["Cut","Copy","Paste","Pastefromword","-","Undo","Redo"]
+                - ["Find","Replace"]
+                - ["Image","Table","HorizontalRule","SpecialChar","PageBreak","Iframe"]
+                - ["Link","Unlink","Anchor"]
+                - ["NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote", "-", "JustifyBlock", "JustifyCenter", "JustifyLeft", "JustifyRight" ]
+                - ["Bold","Italic","Underline","Strike","-","Subscript","Superscript","-","RemoveFormat"]
+                - ["Styles","Format","Font","FontSize"]
+                - ["TextColor","BGColor"]
+
+liip_imagine:
+
+    # configure resolvers
+    resolvers:
+
+        # setup the default resolver
+        default:
+
+            # use the default web path
+            web_path: ~
+
+    # your filter sets are defined here
+    filter_sets:
+
+        # use the default cache configuration
+        cache: ~
+
+        big_slider_block:
+            quality:  90
+            filters:
+                thumbnail: { size: [1920, 600], mode: outbound }
+        individual_pic:
+            quality:  90
+            filters:
+                thumbnail: { size: [570, 470], mode: outbound }
+        parfect_buquet:
+            quality: 100
+            filters:
+                thumbnail: { size: [500, 508], mode: outbound }
+        product_slider_block:
+            quality: 90
+            filters:
+                thumbnail: { size: [475, 455], mode: outbound }
+        portfolio_slider_block:
+            quality: 90
+            filters:
+                thumbnail: { size: [476, 420], mode: outbound }
+        portfolio_block:
+            quality:  90
+            filters:
+                thumbnail: { size: [370, 370], mode: outbound }
+        product_block:
+            quality:  90
+            filters:
+                thumbnail: { size: [310, 310], mode: outbound }
+        blog_post_block:
+            quality:  90
+            filters:
+                thumbnail: { size: [270, 270], mode: outbound }
+        basket_item:
+            quality:  90
+            filters:
+                thumbnail: { size: [170, 170], mode: outbound }
+        product_slider_block_mini:
+            quality:  90
+            filters:
+                thumbnail: { size: [160, 120], mode: outbound }
+        instagram_block_mini:
+            quality:  90
+            filters:
+                thumbnail: { size: [100, 100], mode: outbound }
+        profile_product_block_mini:
+            quality:  90
+            filters:
+                thumbnail: { size: [80, 80], mode: outbound }
+        blog_post_block_mini:
+            quality:  90
+            filters:
+                thumbnail: { size: [70, 70], mode: outbound }

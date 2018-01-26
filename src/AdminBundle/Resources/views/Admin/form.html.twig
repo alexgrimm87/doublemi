@@ -1,0 +1,65 @@
+
+{{ form_start(admin.data.form) }}
+
+{{ form_errors(admin.data.form) }}
+<div class="nav-tabs-custom">
+    <ul class="nav nav-tabs" role="tablist">
+        {% for tab in admin.data.form_holder.tabs %}
+            <li class="tab-item {{ loop.first ? 'active' : '' }}" data-tab="{{ loop.index }}" >
+                <a href="javascript:void(0);">
+                    <i class="fa fa-exclamation-circle has-errors hide" aria-hidden="true"></i>
+                    {{ tab.label|trans }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="">
+        {% for tab in admin.data.form_holder.tabs %}
+            <div data-tab="{{ loop.index }}" class="tab-content  {{ loop.first ? 'active' : '' }}">
+                {% for field in tab.fields %}
+                    {{ form_row(attribute(admin.data.form,field)) }}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{{ form_end(admin.data.form) }}
+
+
+<script>
+    window.onload = function () {
+        jQuery(document).on('click', '.tab-item', function() {
+
+            var id = jQuery(this).attr('data-tab');
+
+            jQuery('.tab-item').removeClass('active');
+            jQuery(this).addClass('active');
+
+            jQuery('.tab-content').removeClass('active');
+            jQuery('.tab-content[data-tab='+id+']').addClass('active');
+
+        });
+    };
+</script>
+
+<style>
+    .tab-item.active {
+
+    }
+
+    .tab-content { display: none; }
+
+    .tab-content.active { display: block; }
+
+    .nav-tabs-custom>ul.nav-tabs {
+        margin-bottom: 20px;
+    }
+    .nav-tabs>li>a {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+    }
+</style>

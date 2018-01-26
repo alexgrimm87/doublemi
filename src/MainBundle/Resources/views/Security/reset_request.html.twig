@@ -1,0 +1,27 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <section class="wrap-forgot">
+        <div class="mbox2">
+            <div class="forgot-content">
+                <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="entrance-form">
+                    <div class="title"><h1>Забыли пароль?</h1></div>
+                    <p>Укажите Ваш E-mail и мы отправим на него новый пароль.</p>
+                    {% if invalid_username is defined %}
+                        <div class="form-field">
+                            <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</p>
+                        </div>
+                    {% endif %}
+                    <div class="form-field">
+                        <input type="text" id="username" name="username" placeholder="E-mail пользователя" required="required" class="el-input" />
+                    </div>
+                    <input type="submit" class="el-button" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}">
+                </form>
+                <div class="links">
+                    <a href="{{ path('fos_user_security_login') }}">Вход</a>
+                    <a href="{{ path('fos_user_registration_register') }}">Регистрация</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

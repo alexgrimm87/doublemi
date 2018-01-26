@@ -1,0 +1,107 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <section class="wrap-card additional-card">
+        <div class="mbox2">
+            <div class="card-content">
+                <div class="navbar">
+                    <h2>Категории</h2>
+                    <ul class="main-list">
+
+                        {% for section in sections %}
+                            {% if not section.parentSection %}
+                                <li class="{{ active_section_code == section.code ? 'active' : '' }}" >
+                                    <a href="{{ path('catalog_unmain_section',{section_code: section.code}) }}">
+                                        {{ section.title }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <a href="{{ path('akcii_root') }}" class="sales-link">АКЦИИ</a>
+                </div>
+                <div class="bouquet">
+                    <form action="{{ path('add_to_basket') }}" method="post">
+                        <input type="hidden" name="product" value="{{ object.id }}">
+                        <div class="bouquet__info">
+                            <div class="bouquet__desc">
+                                {% if object.slider %}
+                                    <div class="bouquet-sider">
+                                        {% for slide in object.slider %}
+                                            <a href="{{ slide }}" rel="cardGallery" data-fancybox="cardGallery">
+                                                <img src="{{ slide|imagine_filter('product_slider_block') }}" alt="">
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                    {% if object.slider|length > 1 %}
+                                        <div class="bouquet-sider-nav">
+                                            {% for slide in object.slider %}
+                                                <div class="slider-item">
+                                                    <img src="{{ slide|imagine_filter('product_slider_block_mini') }}" alt="">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                {% elseif object.picture %}
+                                    <div class="bouquet-sider">
+                                        <a href="{{ object.picture }}" rel="cardGallery" data-fancybox="cardGallery">
+                                            <img src="{{ object.picture|imagine_filter('product_slider_block') }}" alt="">
+                                        </a>
+                                    </div>
+                                {% endif %}
+
+                            </div>
+                            <div class="bouquet__order">
+                                <h1>{{ object.title }}</h1>
+                                <div class="price">{{ object.price|price }}</div>
+                                <div class="buttons">
+                                    <a href="#" class="order add_2_basket">Заказать</a>
+                                    <a href="#" class="el-button one_click_buy">Купить в 1 клик</a>
+                                </div>
+                                {% if object.text %}
+                                    <div class="description">Описание:</div>
+                                    {{ object.text|raw }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if object.bonusProduct.count > 0 and bonus_product_sections %}
+                            <div class="bouquet__addition">
+                                <h2>Приятные дополнения к букету </h2>
+                                <ul class="tabs-list">
+                                    {% for section_element in bonus_product_sections %}
+                                        <li><a href="#">{{ section_element.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="tabs">
+                                    {% for section_element in bonus_product_sections %}
+                                        <div class="tab-content">
+                                            <ul>
+                                                {% for product_element in object.bonusProduct.toArray %}
+                                                    {% if product_element.catalogSection == section_element %}
+                                                        <li>
+                                                            <div class="sale-item">
+                                                                <a href="{{ path('catalog_unmain_section_product',{section_code: product_element.catalogSection.code, product_code: product_element.code}) }}" class="to-category">
+                                                                <span class="pic">
+                                                                     <img src="{{ product_element.picture?product_element.picture|imagine_filter('product_block'):image_placeholder }}" alt="">
+                                                                </span>
+                                                                    <p>{{ product_element.title }}</p>
+                                                                    <span class="price">{{ product_element.price|price }}</span>
+                                                                </a>
+                                                                <a href="{{ path('catalog_unmain_section_product',{section_code: product_element.catalogSection.code, product_code: product_element.code}) }}" class="to-basket el-button">Подробнее</a>
+                                                            </div>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <a href="{{ path('catalog_unmain_section',{section_code: object.catalogSection.code}) }}" class="all">Смотреть все товары категории</a>
+                            </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ seo.object.metaTitle|default('DoubleMi') }}</title>
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <meta name="Description" content="{{ seo.object.metaDescription }}">
+    <meta name="Keywords" content="{{ seo.object.metaKeyWords }}">
+
+    {% if seo.object.picture %}
+        <meta property="og:image" content="{{ seo.object.picture }}">
+        <meta property="twitter:image" content="{{ seo.object.picture }}">
+    {% endif %}
+
+    <meta property="og:description" content="{{ seo.object.metaDescription }}" />
+
+    <!-- build:css styles/plagins.css -->
+    <link rel="stylesheet" href="/styles/fancybox.css">
+    <link rel="stylesheet" href="/styles/formstyler.css">
+    <link rel="stylesheet" href="/styles/normalize.css">
+    <link rel="stylesheet" href="/styles/slick.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- add you plagin css here -->
+
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="/styles/blog.css">
+
+    <link rel="stylesheet" href="/styles/dev_0_basic.css">
+    <link rel="stylesheet" href="/styles/dev_1.css">
+    <link rel="stylesheet" href="/styles/dev_1_adapt.css">
+    <link rel="stylesheet" href="/styles/dev_2.css">
+    <link rel="stylesheet" href="/styles/dev_2_adapt.css">
+    <link rel="stylesheet" href="/styles/dev_4.css">
+    <link rel="stylesheet" href="/styles/dev_4_adapt.css">
+    <link rel="stylesheet" href="/styles/dev_5.css">
+    <link rel="stylesheet" href="/styles/dev_5_adapt.css">
+    <link rel="stylesheet" href="/styles/dev_6.css">
+    <link rel="stylesheet" href="/styles/dev_6_adapt.css">
+    <link rel="stylesheet" href="/styles/dev_7.css">
+    <link rel="stylesheet" href="/styles/dev_7_adapt.css">
+    <link rel="stylesheet" href="/styles/dev_9.css">
+    <!-- add you develop css here -->
+
+    <!-- endbuild -->
+
+</head>
+<body>
+
+<div class="global-wrapper {% block global_wrap_class %}{% endblock %}">
+
+
+    <!-- MAIN -->
+    <div class="main {% block wrap_class %}{% endblock %}">
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+    <!-- /MAIN -->
+
+    <div class="hidden-block">
+        {% block hidden_block %}
+
+            <div id="tel-popup" class="tel-popup">
+                {% if params.contact.phone_1 is defined %}
+                    <div class="tel-title">
+                        <h4>
+                            <a href="tel:{{ params.contact.phone_1|phone_filter }}">{{ params.contact.phone_1 }}</a>
+                        </h4>
+                    </div>
+                {% endif %}
+
+                <div class="tel-content">
+                    {{ params.contact.call_back_text|default('')|raw }}
+                </div>
+            </div>
+
+            <div id="call_success" class="call_success">
+                <div class="call-success-wrap">
+                    <h3 class="title">Спасибо за заявку!</h3>
+                    <p>Мы свяжемся с Вами в ближайшее время</p>
+                </div>
+            </div>
+
+            <div id="basket_success" class="call_success">
+                <div class="call-success-wrap">
+                    <p>Товар успешно добавлен в корзину</p>
+                </div>
+            </div>
+
+            <div id="subscribe-popup" class="call-popup">
+                <form action="{{ path('route_bouquet_subscribe_request') }}" class="subscribe-popup" method="post">
+                    <div class="contact-form-title">
+                        <!-- Title -->
+                    </div>
+                    <div class="form_row">
+                        <input type="text" class="el-input" name="name" required="required" value="" placeholder="Ваше Имя"  maxlength="250" >
+                    </div>
+                    <div class="form_row">
+                        <input type="email" class="el-input" name="email" value="" required="required" placeholder="Ваш e-mail" maxlength="250" >
+                    </div>
+                    <button type="submit" class="contact-submit el-button">
+                        <span>Отправить</span>
+                    </button>
+                </form>
+            </div>
+
+            <div id="call-popup" class="call-popup">
+                <form action="{{ path('call_request') }}" class="contact-form" method="post">
+                    <div class="contact-form-title">
+                        <!-- Title -->
+                    </div>
+                    <div class="form_row">
+                        <input type="text" class="el-input" name="name" required="required" value="" placeholder="Ваше Имя"  maxlength="250" >
+                    </div>
+                    <div class="form_row">
+                        <input type="text" class="el-input tel-mask" name="phone" value="" required="required" placeholder="Ваш номер">
+                    </div>
+                    <button type="submit" class="contact-submit el-button">
+                        <span>Отправить</span>
+                    </button>
+                </form>
+            </div>
+
+            <div id="one-click-buy-popup" class="call-popup">
+                <form action="{{ path('one_click_order') }}" class="one-click-buy-form" method="post">
+                    <div class="contact-form-title">
+                        <!-- Title -->
+                    </div>
+                    <div class="form_row">
+                        <input type="text" class="el-input" name="name" required="required" value="" placeholder="Ваше Имя" maxlength="250" >
+                    </div>
+                    <div class="form_row">
+                        <input type="text" class="el-input tel-mask" name="phone" value="" required="required" placeholder="Ваш номер" >
+                    </div>
+                    <button type="submit" class="contact-submit el-button">
+                        <span>Отправить</span>
+                    </button>
+                </form>
+            </div>
+
+            <div id="bonus-popup" class="bonus-popup">
+                <h3 class="title">Внимание!</h3>
+                <p>При регистрации дейтвует бонусная накопительная система.</p>
+                <a href="#" class="close">Продолжить</a>
+                <a href="#" class="el-button">Подробнее</a>
+            </div>
+
+            <div id="error-format" class="bonus-popup">
+                <h3 class="title">Внимание!</h3>
+                <p>Неверный формат файла.</p>
+            </div>
+
+            <div id="error-size" class="bonus-popup">
+                <h3 class="title">Внимание!</h3>
+                <p>Максимальный размер файла - 1Мб.</p>
+            </div>
+
+            <div id="mobile-menu">
+                <ul class="mobile-menu">
+                    {% for menu in site_menu.mobile %}
+                        <li><a href="{{ menu.url }}">{{ menu.title }}</a></li>
+                    {% endfor %}
+                    <li>
+                        <form action="\" class="search-field-menu">
+                            <input type="text" name="search" class="search" placeholder="Поиск...">
+                            <input type="submit" class="submit" value="">
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        {% endblock hidden_block %}
+    </div>
+
+</div>
+
+<!-- SCRIPTS -->
+<script>
+    adding_to_busket = "busket.json";
+    removing_from_busket = "ajax.php";
+    var mapZoom = 17;
+    var mapMarkerIcon = '/images/marker.png';
+
+    var mapMarkerY = 55.779538;
+    var mapMarkerX = 37.651088;
+
+    var mapCenterY = 55.779538;
+    var mapCenterX = 37.651088;
+
+    //TinyMCE
+    var plugins = [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table contextmenu paste code'
+    ];
+
+    var styleFormats = [
+        {title: 'Image Left', selector: 'img', styles: {
+            'float' : 'left',
+            'margin': '0 30px 0 0'
+        }},
+        {title: 'Image Right', selector: 'img', styles: {
+            'float' : 'right',
+            'margin': '0 0 0 30px'
+        }},
+        { title: 'Containers', items: [
+            { title: 'section', block: 'section', wrapper: true, merge_siblings: false },
+            { title: 'article', block: 'article', wrapper: true, merge_siblings: false },
+            { title: 'blockquote', block: 'blockquote', wrapper: true },
+            { title: 'hgroup', block: 'hgroup', wrapper: true },
+            { title: 'aside', block: 'aside', wrapper: true },
+            { title: 'figure', block: 'figure', wrapper: true }
+        ] }
+    ];
+
+    var toolbar = 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image';
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- build:js scripts/validate_script.js -->
+<script type="text/javascript" src="/scripts/validate_script.js" ></script>
+<!-- endbuild -->
+
+<!-- build:js scripts/plagins.js -->
+<script type="text/javascript" src="/scripts/plagins/device.js" ></script>
+<script type="text/javascript" src="/scripts/plagins/jquery.fancybox.min.js" ></script>
+<script type="text/javascript" src="/scripts/plagins/jquery.formstyler.min.js" ></script>
+<script type="text/javascript" src="/scripts/plagins/jquery.validate.min.js" ></script>
+<script type="text/javascript" src="/scripts/plagins/maskInput.js" ></script>
+<script type="text/javascript" src="/scripts/plagins/slick.js" ></script>
+
+<!-- add you plagins js here -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCP6kzRzQA2exVf1tN-EudPZcTZVsgadi0"></script>
+
+<!-- endbuild -->
+
+<!-- build:js scripts/main.js -->
+
+<script type="text/javascript" src="/scripts/basic_scripts.js" ></script>
+<script type="text/javascript" src="/scripts/develop/develop_1.js" ></script>
+<script type="text/javascript" src="/scripts/develop/develop_2.js?c=2" ></script>
+<script type="text/javascript" src="/scripts/develop/develop_4.js" ></script>
+<script type="text/javascript" src="/scripts/develop/develop_5.js" ></script>
+<script type="text/javascript" src="/scripts/develop/develop_6.js" ></script>
+<script type="text/javascript" src="/scripts/develop/develop_7.js" ></script>
+<script type="text/javascript" src="/scripts/develop/develop_9.js" ></script>
+<!-- add you develop js here -->
+<!-- endbuild -->
+
+<!-- /SCRIPTS -->
+
+</body>
+</html>

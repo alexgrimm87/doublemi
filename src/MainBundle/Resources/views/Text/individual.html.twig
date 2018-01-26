@@ -1,0 +1,236 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <section class="individual js-tab">
+        <form class="individual-form" action="{{ path('route_individual_request') }}" method="post" name="individual">
+
+            <div class="individual-beloved-wrap mbox2">
+                <div class="individual-beloved">
+                    <div class="bouquet-pic el-bouquet">
+                        {% if page.picture is defined %}
+                            <img src="{{ page.picture }}" alt="{{ 'individual_title'|trans }}">
+                        {% endif %}
+                        <div class="perfect-circle">
+                            <div class="circle-title">
+                                {{ page.picture_text|default('')|raw }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bouquet-order">
+                        <h1>{{ page.title is defined ? page.title : 'individual_title'|trans }}</h1>
+                        <div class="price">
+                            {% set pattern_str = '<span class="js-price" data-price="' ~ page.price|default(0) ~ '">$1</span>' %}
+                            {{ page.price|default(0)|price|shity_price(pattern_str)|raw }}
+                        </div>
+                        <div class="deliv-date">
+                            <span>Дата доставки:</span>
+                            <div class="wrap-datepicker">
+                                <input type="text" class="datepicker" name="date">
+                            </div>
+                            <select name="time" class="js_select-dotted">
+                                <option value="09:00">09:00</option>
+                                <option value="10:00">10:00</option>
+                                <option value="11:00">11:00</option>
+                                <option value="12:00">12:00</option>
+                                <option value="13:00">13:00</option>
+                                <option value="14:00">14:00</option>
+                                <option value="15:00">15:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                            </select>
+                        </div>
+
+                        {{ config_params.text_day_delivery|default('')|raw }}
+                        <div class="free-deliv">{{ config_params.text_free_delivery|default('')|raw }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vertical-kind mbox2">
+                {% if blocks.category is defined %}
+                    <div class="vertical-kind-top category">
+                        <div class="kind-top-left">
+                            <div class="kind-top-left-inner">
+                                <div class="kind-top-title">
+                                    <h2>{{ blocks.category.title }}</h2>
+                                    {{ blocks.category.subtitle|raw }}
+                                </div>
+                                {% for param in blocks.category.params %}
+                                    <div class="form-field" data-price="{{ param.markup?:0 }}">
+                                        <input type="radio" value="{{ param.title }}" name="category" class="js-radio" id="category{{ loop.index }}">
+                                        <label for="category{{ loop.index }}">{{ param.title }}<span>{{ param.subtitle|default('') }}</span></label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="kind-top-right">
+                            {% if blocks.category.picture %}
+                                <img src="{{ blocks.category.picture|imagine_filter('individual_pic') }}" alt="{{ blocks.category.title }}">
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% if blocks.size is defined %}
+                    <div class="vertical-kind-bottom size">
+                        <div class="kind-bottom-left">
+                            {% if blocks.size.picture %}
+                                <img src="{{ blocks.size.picture|imagine_filter('individual_pic') }}" alt="{{ blocks.size.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="kind-bottom-right">
+                            <div class="kind-bottom-right-inner">
+                                <div class="kind-bottom-title">
+                                    <h2>{{ blocks.size.title }}</h2>
+                                    {{ blocks.size.subtitle|raw }}
+                                </div>
+                                {% for param in blocks.size.params %}
+                                    <div class="form-field" data-price="{{ param.markup?:0 }}">
+                                        <input type="radio" value="{{ param.title }}" name="size" class="js-radio" id="size{{ loop.index }}">
+                                        <label for="size{{ loop.index }}">{{ param.title }}<span>{{ param.subtitle|default('') }}</span></label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if blocks.shape is defined %}
+                <div class="shape horiz-kind">
+                    <div class="horiz-kind-title">
+                        <h2>{{ blocks.shape.title }}</h2>
+                        {{ blocks.shape.subtitle|raw }}
+                    </div>
+                    <div class="horiz-kind-inner">
+                        {% for param in blocks.shape.params %}
+                            <div class="form-field" data-price="{{ param.markup?:0 }}">
+                                <input type="radio" value="{{ param.title }}" name="shape" class="js-radio" id="shape{{ loop.index }}">
+                                <label for="shape{{ loop.index }}">{{ param.title }}<span>{{ param.subtitle|default('') }}</span></label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="vertical-kind mbox2">
+                {% if blocks.kind is defined %}
+                    <div class="vertical-kind-top kind">
+                        <div class="kind-top-left">
+                            <div class="kind-top-left-inner">
+                                <div class="kind-top-title">
+                                    <h2>{{ blocks.kind.title }}</h2>
+                                    {{ blocks.kind.subtitle|raw }}
+                                </div>
+                                {% for param in blocks.kind.params %}
+                                    <div class="form-field" data-price="{{ param.markup?:0 }}">
+                                        <input type="radio" value="{{ param.title }}" name="kind" class="js-radio" id="kind{{ loop.index }}">
+                                        <label for="kind{{ loop.index }}">{{ param.title }}<span>{{ param.subtitle|default('') }}</span></label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="kind-top-right">
+                            {% if blocks.kind.picture %}
+                                <img src="{{ blocks.kind.picture|imagine_filter('individual_pic') }}" alt="{{ blocks.kind.title }}">
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% if blocks.gamma is defined %}
+                    <div class="vertical-kind-bottom spectrum">
+                        <div class="kind-bottom-left">
+                            {% if blocks.gamma.picture %}
+                                <img src="{{ blocks.gamma.picture|imagine_filter('individual_pic') }}" alt="{{ blocks.gamma.title }}">
+                            {% endif %}
+                        </div>
+                        <div class="kind-bottom-right">
+                            <div class="kind-bottom-right-inner">
+                                <div class="kind-bottom-title">
+                                    <h2>{{ blocks.gamma.title }}</h2>
+                                    {{ blocks.gamma.subtitle|raw }}
+                                </div>
+                                {% for param in blocks.gamma.params %}
+                                    <div class="form-field" data-price="{{ param.markup?:0 }}">
+                                        <input type="radio" value="{{ param.title }}" name="gamma" class="js-radio" id="gamma{{ loop.index }}">
+                                        <label for="gamma{{ loop.index }}">{{ param.title }}<span>{{ param.subtitle|default('') }}</span></label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if blocks.package is defined %}
+                <div class="type horiz-kind">
+                    <div class="horiz-kind-title">
+                        <h2 class="title title-green">{{ blocks.package.title }}</h2>
+                        {{ blocks.package.subtitle|raw }}
+                    </div>
+                    <div class="horiz-kind-inner">
+                        {% for param in blocks.package.params %}
+                            <div class="form-field" data-price="{{ param.markup?:0 }}">
+                                <input type="radio" value="{{ param.title }}" name="package" class="js-radio" id="package{{ loop.index }}">
+                                <label for="package{{ loop.index }}">{{ param.title }}<span>{{ param.subtitle|default('') }}</span></label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="additionally">
+                <h2>Дополнительно</h2>
+                {% if page.occasion_params is defined %}
+                    <div class="select-field">
+                        <span>Повод:</span>
+                        <select name="occasion" class="js_select-dotted">
+                            {% for row in page.occasion_params %}
+                                <option value="{{ row.title }}">{{ row.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                {% endif %}
+                {% if page.target_params is defined %}
+                    <div class="select-field">
+                        <span>Кому:</span>
+                        <select name="target" class="js_select-dotted">
+                            {% for row in page.target_params %}
+                                <option value="{{ row.title }}">{{ row.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                {% endif %}
+                <div class="form-field">
+                    <input class="el-input" type="email" name="email" placeholder="E-mail" required />
+                </div>
+                <div class="form-field">
+                    <input class="el-input tel-mask" type="tel" name="phone" placeholder="Телефон отправителя" required />
+                </div>
+                <div class="form-field">
+                    <input class="el-input tel-mask" type="tel" name="phoneRecipient" placeholder="Телефон получателя"  />
+                </div>
+                <div class="form-field">
+                    <input class="el-input" type="text" name="address" placeholder="Адрес доставки"  />
+                </div>
+                <div class="form-field">
+                    <input class="el-input" type="text" name="negativeFlower" placeholder="Нежелательные цветы"  />
+                </div>
+                <div class="form-field">
+                    <textarea class="el-textarea" name="comment" placeholder="Коментарий" ></textarea>
+                </div>
+                <div class="radio-row">
+                    <div class="form-field">
+                        <input type="radio" name="payment" class="js-radio" id="cash" value="cash">
+                        <label for="cash">Оплата наличными</label>
+                    </div>
+                    <div class="form-field">
+                        <input type="radio" name="payment" class="js-radio" id="online" value="online">
+                        <label for="online">Оплата онлайн</label>
+                    </div>
+                </div>
+                <button type="submit" class="el-button">Оформить заказ</button>
+            </div>
+        </form>
+    </section>
+{% endblock content %}

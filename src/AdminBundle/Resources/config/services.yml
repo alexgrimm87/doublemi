@@ -1,0 +1,58 @@
+services:
+    admin.form.type.autocomplete:
+        class: AdminBundle\Form\Type\AutocompleteType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type }
+    admin.form.type.autocomplete2:
+        class: AdminBundle\Form\Type\Autocomplete2Type
+        arguments: ["@doctrine"]
+        tags:
+            - { name: form.type }
+    pager_generator:
+        class:  AdminBundle\Service\PagerService
+    admin.config:
+        class:  AdminBundle\Service\ConfigService
+    admin.pages:
+        class: AdminBundle\Service\PagesService
+        calls:
+            - [addMenu, [Параметры, admin_config, menu.settings]]
+
+    admin.routing_loader:
+        class: AdminBundle\Routing\ExtraLoader
+        tags:
+            - { name: routing.loader }
+    admin.form.type.fileselect:
+        class: AdminBundle\Form\Type\FileselectType
+        tags:
+            - { name: form.type }
+
+    main.catalog.pricerange:
+        class: AdminBundle\Admin\PriceRangeAdmin
+        arguments:  [ MainBundle\Entity\PriceRange ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalogparametrs ] ]
+
+    main.catalog.service:
+        class: AdminBundle\Admin\ServiceAdmin
+        arguments:  [ MainBundle\Entity\Service ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalog ] ]
+    main.catalog.features:
+        class: AdminBundle\Admin\ProductRelatedAdmin
+        arguments:  [ MainBundle\Entity\ProductFeatures ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalog ] ]
+    main.catalog.related:
+        class: AdminBundle\Admin\ProductRelatedAdmin
+        arguments:  [ MainBundle\Entity\ProductRelatedInfo ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalog ] ]

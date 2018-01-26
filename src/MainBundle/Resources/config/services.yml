@@ -1,0 +1,213 @@
+services:
+    main.exception_controller:
+        class: MainBundle\Controller\ExceptionController
+        arguments: ['@twig', '%kernel.debug%']
+    main.twig_extension:
+        class:  MainBundle\Twig\MainExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+    main.basket:
+        class: MainBundle\Service\BasketService
+    main.breadcrumbs:
+        class: MainBundle\Service\BreadcrumbsService
+    main.seo:
+        class: MainBundle\Service\SEOService
+    main.menu:
+        class: MainBundle\Service\MenuService
+
+    main.catalog.section.main:
+        class: MainBundle\Admin\CatalogSectionMainAdmin
+        arguments:  [ MainBundle\Entity\CatalogSection ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalog ] ]
+    main.catalog.section.unmain:
+        class: MainBundle\Admin\CatalogSectionUnMainAdmin
+        arguments:  [ MainBundle\Entity\CatalogSection ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalog ] ]
+
+    main.catalog.productmain:
+        class: MainBundle\Admin\ProductMain
+        arguments:  [ MainBundle\Entity\Product ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalog ] ]
+    main.catalog.productunmain:
+        class: MainBundle\Admin\ProductUnMain
+        arguments:  [ MainBundle\Entity\Product ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalog ] ]
+
+    main.catalog.color:
+        class: MainBundle\Admin\CatalogParamsAdmin
+        arguments:  [ MainBundle\Entity\Color ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalogparametrs ] ]
+    main.catalog.occasion:
+        class: MainBundle\Admin\CatalogParamsAdmin
+        arguments:  [ MainBundle\Entity\Occasion ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalogparametrs ] ]
+    main.catalog.note:
+        class: MainBundle\Admin\CatalogParamsAdmin
+        arguments:  [ MainBundle\Entity\Note ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalogparametrs ] ]
+    main.catalog.season:
+        class: MainBundle\Admin\CatalogParamsAdmin
+        arguments:  [ MainBundle\Entity\Season ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalogparametrs ] ]
+    main.catalog.target:
+        class: MainBundle\Admin\CatalogParamsAdmin
+        arguments:  [ MainBundle\Entity\Target ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalogparametrs ] ]
+    main.catalog.type:
+        class: MainBundle\Admin\CatalogParamsAdmin
+        arguments:  [ MainBundle\Entity\Type ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalogparametrs ] ]
+    main.catalog.package:
+        class: MainBundle\Admin\CatalogParamsAdmin
+        arguments:  [ MainBundle\Entity\Package ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.catalogparametrs ] ]
+
+    main.individualrequest:
+        class: MainBundle\Admin\IndividualBouquetRequestAdmin
+        arguments:  [ MainBundle\Entity\IndividualBouquetRequest ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.connection ] ]
+    main.servicerequest:
+        class: MainBundle\Admin\ServiceRequestAdmin
+        arguments:  [ MainBundle\Entity\ServiceRequest ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.connection ] ]
+    main.callrequest:
+        class: MainBundle\Admin\CallRequestAdmin
+        arguments:  [ MainBundle\Entity\CallRequest ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.connection ] ]
+    main.contact:
+        class: MainBundle\Admin\ContactAdmin
+        arguments:  [ MainBundle\Entity\Contact ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.connection ] ]
+    main.info:
+        class: MainBundle\Admin\InfoAdmin
+        arguments:  [ MainBundle\Entity\Info ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.information ] ]
+    main.akcii:
+        class: MainBundle\Admin\AkciiAdmin
+        arguments:  [ MainBundle\Entity\Akcii ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.information ] ]
+    main.pagefigure:
+        class: MainBundle\Admin\MainPageFigureAdmin
+        arguments:  [ MainBundle\Entity\MainPageFigure ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.settings ] ]
+    main.portfolio:
+        class: MainBundle\Admin\PortfolioAdmin
+        arguments:  [ MainBundle\Entity\Portfolio ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.information ] ]
+    main.feedback:
+        class: MainBundle\Admin\FeedbackAdmin
+        arguments:  [ MainBundle\Entity\Feedback ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.connection ] ]
+    main.email:
+        class: MainBundle\Admin\EmailTemplateAdmin
+        arguments:  [ MainBundle\Entity\EmailTemplate ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.settings ] ]
+    main.seoadmin:
+        class: MainBundle\Admin\SEOAdmin
+        arguments:  [ MainBundle\Entity\SEO ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.settings ] ]
+    main.menuadmin:
+        class: MainBundle\Admin\MenuAdmin
+        arguments:  [ MainBundle\Entity\Menu ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.settings ] ]
+    main.order:
+        class: MainBundle\Admin\OrderRequestAdmin
+        arguments:  [ MainBundle\Entity\OrderRequest ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.order ] ]
+    mailing.template:
+        class: MainBundle\Admin\MailingTemplateAdmin
+        arguments:  [ MainBundle\Entity\MailingTemplate ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.mailing ] ]
+    mailing.subscribe:
+        class: MainBundle\Admin\MailingSubscribeAdmin
+        arguments:  [ MainBundle\Entity\MailingSubscribe ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.mailing ] ]
+    main.bouquetsubscribe:
+        class: MainBundle\Admin\BouquetSubscribeAdmin
+        arguments:  [ MainBundle\Entity\BouquetSubscribe ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.connection ] ]
+#    main.example:
+#        class: MainBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

@@ -1,0 +1,30 @@
+{% extends 'AdminBundle:Admin:base.html.twig' %}
+
+{% form_theme admin.data.form 'AdminBundle:Form:fields.html.twig' %}
+
+{% block title %}
+    Настройки
+{% endblock title %}
+
+{% block admin_page_content_header %}
+    <span style="font-size: 26px;">{{ admin.data.file.name|default('Настройки') }}</span>
+
+    <a style="float: right;" class="btn" href="{{ path('admin_config') }}">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Вернутся к списку
+    </a>
+{% endblock admin_page_content_header %}
+
+{% block admin_page_content_content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-body">
+                    {{ form_start(admin.data.form) }}
+                    {{ form_widget(admin.data.form) }}
+                    {{ form_end(admin.data.form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock admin_page_content_content %}

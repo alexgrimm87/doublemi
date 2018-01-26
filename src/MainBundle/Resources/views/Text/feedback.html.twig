@@ -1,0 +1,88 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <section class="wrap-feedbacks">
+        <div class="mbox2">
+            <div class="title"><h1>Отзывы</h1></div>
+            <div class="feedbacks-list">
+                {% if userFeedback %}
+                    <div class="feedbacks-item">
+                        <div class="photo">
+                            {% if userFeedback.picture %}
+                                <img src="{{ userFeedback.picture }}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="feedback-text">
+                            <div class="name">{{ userFeedback.title }} <span style="color: #bfbfbf; font-size: small;">(Ваш отзыв)</span></div>
+                            <div class="desc">
+                                <ul class="feedback-stars">
+                                    {% for i in 1..5 %}
+                                        <li class="{{ i<=userFeedback.score?'active':'' }}"></li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="date">{{ userFeedback.date|site_date }}</div>
+                            </div>
+                            <p>{{ userFeedback.text|nl2br }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+                {% for item in objects.items %}
+                    {% if not userFeedback or userFeedback.id != item.id %}
+                        <div class="feedbacks-item">
+                            <div class="photo">
+                                {% if item.picture %}
+                                    <img src="{{ item.picture }}" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="feedback-text">
+                                <div class="name">{{ item.title }}</div>
+                                <div class="desc">
+                                    <ul class="feedback-stars">
+                                        {% for i in 1..5 %}
+                                            <li class="{{ i<=item.score?'active':'' }}"></li>
+                                        {% endfor %}
+                                    </ul>
+                                    <div class="date">{{ item.date|site_date }}</div>
+                                </div>
+                                <p>{{ item.text|nl2br }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            {% include 'MainBundle:Default:pagination.html.twig' %}
+
+            {% if app.user and not userFeedback %}
+                <div class="feedback-form">
+                    <form enctype="multipart/form-data">
+                        <div class="title">Оставить Отзыв</div>
+                        <div class="form-row">
+                            <input type="text" class="el-input" required="required" name="feedback[title]" placeholder="ФИО">
+                        </div>
+                        <div class="form-row stars">
+                            <span>Оценка:</span>
+                            <input name="feedback[score]" type="radio" id="five-star" value="1">
+                            <label for="five-star" class="stars-label"></label>
+                            <input name="feedback[score]" type="radio" id="four-star" value="2">
+                            <label for="four-star" class="stars-label"></label>
+                            <input name="feedback[score]" type="radio" id="three-star" value="3">
+                            <label for="three-star" class="stars-label"></label>
+                            <input name="feedback[score]" type="radio" id="two-star" value="4">
+                            <label for="two-star" class="stars-label"></label>
+                            <input name="feedback[score]" type="radio" id="one-star" value="5">
+                            <label for="one-star" class="stars-label"></label>
+                        </div>
+                        <div class="form-row">
+                            <textarea name="feedback[text]" class="el-textarea" placeholder="Отзыв" required="required"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <input type="file" class="js-file" data-placeholder="Загрузить фото" data-browse="Выбрать" name="feedback[pictureFile]">
+                        </div>
+                        <input type="submit" class="el-button" value="Отправить">
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends 'MainBundle:Profile:base.html.twig' %}
+
+{% block cabinet_tab %}
+    <div class="cabinet-tab active">
+        <div class="change-password-form">
+            <form action="{{ path('user_profile_subscribe') }}" class="letters-form" method="post">
+                <h2 class="title title-left">E-mail рассылка</h2>
+                <p>Подписаться на информационную расылку?</p>
+                <div class="radios">
+                    <div class="form-field">
+                        <input type="radio" class="js-radio" id="yes" name="letters" value="yes" {{ subscribed ? 'checked="checked"' : '' }}>
+                        <label for="yes">Да</label>
+                    </div>
+                    <div class="form-field">
+                        <input type="radio" class="js-radio" id="no" name="letters" value="no" {{ subscribed ? '' : 'checked="checked"' }}>
+                        <label for="no">Нет</label>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <input type="submit" class="el-button" value="Сохранить">
+                    <a href="{{ path('user_profile_subscribe') }}" class="cancel">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

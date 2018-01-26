@@ -1,0 +1,33 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <section class="wrap-sales-article">
+        <div class="mbox2">
+            <h1>{{ object.title }}</h1>
+            <div class="sales-price">{{ object.price ? object.price|price : '' }}</div>
+            <div class="article">
+                {{ object.text|raw }}
+            </div>
+            {% if object.similarAkcii.count > 0 %}
+                <h2>Последние скидки</h2>
+                <div class="sales-list">
+                    <ul>
+                        {% for item in object.similarAkcii  %}
+                            <li>
+                                <a href="{{ path('akcii_element',{code: item.code}) }}" class="sale-item">
+                                        <span class="pic">
+                                            {% if item.picture %}
+                                                <img src="{{ item.picture }}" alt="">
+                                            {% endif %}
+                                        </span>
+                                    <p>{{ item.title }}</p>
+                                    <span class="price">{{ item.price ? item.price|price : '' }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock content %}

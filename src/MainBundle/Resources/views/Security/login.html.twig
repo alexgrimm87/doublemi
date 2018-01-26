@@ -1,0 +1,46 @@
+{% extends 'MainBundle:Default:clear.html.twig' %}
+
+{% block content %}
+    <section class="wrap-forgot">
+        <div class="mbox2">
+            <div class="forgot-content">
+                <form action="{{ path("fos_user_security_check") }}" method="post" class="entrance-form">
+                    <div class="title"><h1>Вход</h1></div>
+                    {% if error %}
+                        <div class="form-field">
+                            <div style="color: red;">Неверный логин или пароль</div>
+                        </div>
+                    {% endif %}
+                    {% if csrf_token %}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                    {% endif %}
+                    {% if _target_path is defined and _target_path%}
+                        <input type="hidden" name="_target_path" value="{{ path(_target_path,(_target_path_params?_target_path_params:{})) }}" />
+                    {% endif %}
+                    <div class="form-field">
+                        <input type="text"
+                               name="_username"
+                               class="el-input"
+                               placeholder="E-mail"
+                               required="required"
+                               value="{{ last_username }}"
+                        />
+                    </div>
+                    <div class="form-field">
+                        <input type="password" name="_password" class="el-input" placeholder="Пароль" required="required">
+                    </div>
+                    <div class="form-field checkbox">
+                        <input type="checkbox" class="js-checkbox" id="remember" name="_remember_me" value="on">
+                        <label for="remember">Запомнить меня</label>
+                    </div>
+                    <input type="submit" class="el-button" value="Авторизация">
+                </form>
+                {#
+                <div class="links">
+                    <a href="{{ path('fos_user_registration_register') }}">Ещё нет акаунта?</a>
+                    <a href="{{ path('fos_user_resetting_request') }}">Забыли пароль?</a>
+                </div>#}
+            </div>
+        </div>
+    </section>
+{% endblock content %}

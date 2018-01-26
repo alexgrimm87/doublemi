@@ -1,0 +1,37 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <section class="wrap-cabinet">
+        <div class="mbox2">
+            <div class="cabinet-content">
+
+                <div class="navbar">
+                    <div class="title"><h1><a href="#">Личный кабинет</a></h1></div>
+                    {% if profile_menu %}
+                        <a href="#" class="burger"><span></span></a>
+                        <ul class="cabinet-navbar">
+                            {% for row in profile_menu %}
+                                <li><a href="{{ row.route ? path(row.route) : '#' }}" class="escape {{ row.active ? 'active' : '' }}">{{ row.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="cabinet">
+                    {% block cabinet_tab %}
+                        <div class="cabinet-tab active">
+                            {% for row in profile_menu %}
+                                {% if row.picture %}
+                                    <a href="{{ row.route ? path(row.route) : '#' }}" class="cab-link escape">
+                                        <span class="pic"><img src="{{ row.picture }}" alt=""></span>
+                                        <p>{{ row.title }}</p>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

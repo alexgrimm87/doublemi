@@ -1,0 +1,21 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <section class="gallery mbox2">
+        <h1>{{ object.title }}</h1>
+        <div class="gallery-info">
+            {{ object.text|raw }}
+        </div>
+        {% if object.slider %}
+            <div class="gallery-item">
+                <div class="gallery-outer">
+                    <div class="gallery-inner">
+                        {% for slide in object.slider %}
+                            <a rel="gallery1" href="{{ slide }}" data-fancybox="gallery"><img src="{{ slide|imagine_filter('portfolio_block') }}" alt=""></a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+{% endblock content %}

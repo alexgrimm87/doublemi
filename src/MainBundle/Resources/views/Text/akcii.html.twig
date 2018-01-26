@@ -1,0 +1,36 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <section class="wrap-sales">
+        <div class="mbox2">
+            <h2>Акции</h2>
+            <div class="sales-list">
+                {% if objects.items %}
+                    <ul>
+                        {% for item in objects.items  %}
+                            <li>
+                                <a href="{{ path('akcii_element',{code: item.code}) }}" class="sale-item">
+                                    <span class="pic">
+                                        {% if item.picture %}
+                                            <img src="{{ item.picture }}" alt="">
+                                        {% endif %}
+                                    </span>
+                                    <p>{{ item.title }}</p>
+                                    <span class="price">{{ item.price ? item.price|price : '' }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            {% include 'MainBundle:Default:pagination.html.twig' %}
+
+        </div>
+    </section>
+    {% if params.config.global_seo_text is defined %}
+        <section class="about-block mbox2 section-unmain-wrapper">
+            {{ params.config.global_seo_text|raw }}
+        </section>
+    {% endif %}
+{% endblock %}

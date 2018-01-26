@@ -1,0 +1,691 @@
+{# Widgets #}
+{% block array_object_widget %}
+
+    <div class="form-control" id="{{ id }}">
+        {% set index = 0 %}
+        {% for v in value %}
+            <div class="form-control-row" >
+                <i class="fa fa-times icon_placeholder delete_control_row"></i>
+                {% for field in fields %}
+                    <label>{{ field.label|trans }}<input {% if field.required %}required="required"{% endif %} type="{{ field.type }}" name="{{ full_name ~ '[' ~ index ~ '][' ~ field.name }}]" value="{{ v[field.name]?:'' }}"></label>
+                {% endfor %}
+                {% set index = index + 1 %}
+            </div>
+        {% endfor %}
+        <a href="javascript:void(0)" onclick="ArrayObjectAction{{ id }}(this); "  >Добавить</a>
+    </div>
+    <script>
+
+        {% set pattern = '<div class="form-control-row" ><i class="fa fa-times icon_placeholder delete_control_row"></i>' %}
+        {% for field in fields %}
+            {% set pattern = pattern ~ '<label>' ~ (field.label|trans) ~ '<input ' ~ (field.required ? 'required="required"':'') ~ ' type="' ~ field.type ~ '" name="' ~ full_name ~ '[\'+index+\'][' ~ field.name ~ ']"></label>' %}
+        {% endfor %}
+        {% set pattern = pattern ~ '</div>' %}
+
+        function ArrayObjectAction{{ id }}(a){
+            var index = jQuery('#{{ id }}').find('.form-control-row').length;
+            var pattern = '{{ pattern|raw }}';
+
+            jQuery(a).before(pattern);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            $(document).on('click','.delete_control_row',function () {
+                $(this).parent().remove();
+            });
+        });
+    </script>
+{% endblock array_object_widget %}
+
+{% block file_process %}
+    <script>
+        window.processFile = function(a){
+            a = '/'+a;
+            jQuery(fileselect_widget_selector).val(a);
+            var parent = jQuery(fileselect_widget_selector).parent();
+            var img = parent.find('img');
+            if(img.length>0){
+                img.attr('src',a);
+            }
+
+            var link = parent.find('a');
+            if(link.length>0){
+                link.attr('href',a);
+            }
+        }
+    </script>
+{% endblock %}
+
+{% block fileslider_widget %}
+
+    <div class="form-control">
+
+        <ul class="sortable" id="{{ id }}" data-name="{{ full_name }}[]">
+            {% for val in value %}
+                <li class="ui-state-default">
+                    <i class="fa fa-times delete_sortable_element icon_placeholder"></i>
+                    <a class="search_icon_link" href="{{ val }}" target="_blank" ><i class="fa fa-search-plus"></i></a>
+                    <img src="{{ val }}" />
+                    <input type="hidden" name="{{ full_name }}[]" value="{{ val }}">
+                </li>
+            {% endfor %}
+        </ul>
+
+        <a href="javascript:void(0)" onclick="fileSelectAction('{{ id }}'); "  >Добавить</a>
+    </div>
+
+    <script>
+        var fileselect_widget_selector = '#{{ id }}';
+    </script>
+    {{ block('file_process') }}
+    <script>
+
+        function fileSelectAction(id) {
+            //add new field
+            var name = $('#'+id).data('name');
+            var new_id = id+'_'+($('#'+id).find('li').length +1);
+            $('#'+id).append(
+                    '<li  class="ui-state-default">'
+                    +'<i class="fa fa-times delete_sortable_element icon_placeholder"></i>'
+                    +'<a class="search_icon_link" href="javascript:void(0);" target="_blank" ><i class="fa fa-search-plus"></i></a>'
+                    +'<img src="/placeholder.svg" />'
+                    +'<input type="hidden" name="'+name+'" value="" id="'+new_id+'">'
+                    +'</li>'
+            );
+            //register new field
+            fileselect_widget_selector = '#'+new_id;
+
+            $( fileselect_widget_selector ).sortable();
+            $( fileselect_widget_selector ).disableSelection();
+
+            window.open('{{ path(filebrowserBrowseRoute, filebrowserBrowseRouteParameters) }}', '_blank', 'left=200;width=700')
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            $(document).on('click','.delete_sortable_element',function () {
+                $(this).parent().remove();
+            });
+
+            $( function() {
+                $( "#{{ id }}" ).sortable();
+                $( "#{{ id }}" ).disableSelection();
+            } );
+        });
+    </script>
+{% endblock %}
+
+{% block autocomplete2_widget %}
+
+
+        <select lang="ru"
+                id="{{ id }}_autocomplete_input"
+                class="itemName form-control"
+                style="width: 100%;"
+                {% if required %}
+                    required="required"
+                {% endif %}
+
+                {% if multiple %}
+                    multiple="multiple"
+                    name="{{ full_name }}[]"
+                {% else %}
+                    name="{{ full_name }}"
+                {% endif %}
+        >
+            {%- for key,val in value -%}
+                {% if value['_labels'][key] is defined %}
+                    <option value="{{ val }}" selected="selected">{{ value['_labels'][key] }}</option>
+                {% endif %}
+            {%- endfor -%}
+        </select>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            (function ($) {
+                $(window).load(function() {
+                    var autocompleteInput = $('#{{ id }}_autocomplete_input');
+                    autocompleteInput.select2({
+                        minimumInputLength: 1,
+                        cache: true,
+                        language: "ru",
+                        lang: "ru",
+                        ajax: {
+                            url: "{{ path(property_url, property_url_params) }}",
+                            dataType: 'json',
+                            delay: 250,
+                            type: "GET",
+                            data: function (params) {
+                                return {
+                                    'filter': {
+                                        '{{ property_field }}': params.term // search term
+                                    },
+                                    '_page': params.page,
+                                    '_format': 'json',
+                                    '_autocomplete': '1',
+                                    '_limit': 10
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: data.items,
+                                    pagination: {
+                                        more: 10 * params.page > data.page_info.total
+                                }
+                            };
+
+                            }
+                        }
+                    });
+
+                });
+            })(jQuery);
+        });
+    </script>
+
+{% endblock %}
+
+{% block autocomplete_widget %}
+
+    {#
+    <select lang="ru"
+            id="{{ id }}_autocomplete_input"
+            class="itemName form-control"
+            style="width:500px"
+
+            {% if multiple %}
+                multiple="multiple"
+                name="{{ full_name }}"
+            {% else %}
+                name="{{ full_name }}"
+            {% endif %}
+    >
+        {%- for key,val in value -%}
+            {% if value['_labels'][key] is defined %}
+                <option value="{{ val }}" selected="selected">{{ value['_labels'][key] }}</option>
+            {% endif %}
+        {%- endfor -%}
+
+
+    </select>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            (function ($) {
+                $(window).load(function() {
+                    var autocompleteInput = $('#{{ id }}_autocomplete_input');
+                    autocompleteInput.select2({
+                        minimumInputLength: {{ minimum_input_length }},
+                        cache: true,
+                        language: "ru",
+                        lang: "ru",
+                        ajax: {
+                            url: "{{ path(property_url, route.parameters|default([]))}}",
+                            dataType: 'json',
+                            delay: 250,
+                            type: "GET",
+                            data: function (params) {
+                                return {
+                                    'filter': {
+                                        '{{ property_field }}': params.term // search term
+                                    },
+                                    '_page': params.page,
+                                    '_format': 'json',
+                                    '_autocomplete': '1',
+                                    '_limit': {{ items_per_page }}
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: data.items,
+                                    pagination: {
+                                        more: {{ items_per_page }} * params.page > data.page_info.total
+                                    }
+                                };
+
+                            }
+                        }
+                    });
+
+                });
+            })(jQuery);
+        });
+    </script>
+    #}
+{% endblock %}
+
+{% block fileselect_widget %}
+    <div class="form-control">
+        <input type="hidden" {{ block('widget_attributes') }} class="form-control" {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        <img src="{{ value?:'/placeholder.svg' }}" alt="" style="max-width: 200px; max-height: 300px; display: block;" />
+
+        <a href="javascript:void(0)" onclick="fileselect_widget_selector='#{{ id }}'; window.open('{{ path(filebrowserBrowseRoute, filebrowserBrowseRouteParameters) }}','_blank','left=200;width=700')"  >Выбор</a>
+    </div>
+
+    <script>
+        var fileselect_widget_selector = '#{{ id }}';
+    </script>
+    {{ block('file_process') }}
+{% endblock %}
+
+{%- block form_widget -%}
+    {% if compound %}
+        {{- block('form_widget_compound') -}}
+    {% else %}
+        {{- block('form_widget_simple') -}}
+    {% endif %}
+{%- endblock form_widget -%}
+
+{%- block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    {% set add_class = '' %}
+
+    {% if attr.class is not defined %}
+        {% set add_class = 'class=form-control' %}
+    {% endif %}
+
+    {% if not type == 'hidden' %}
+        <div class="admin-ba-field">
+    {% endif %}
+
+    <input type="{{ type }}" {{ add_class }} {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+
+    {% if attr.help is defined %}
+        {{ attr.help|raw }}
+    {% endif %}
+
+    {% if not type == 'hidden' %}
+        </div>
+    {% endif %}
+{%- endblock form_widget_simple -%}
+
+{%- block form_widget_compound -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form.parent is empty -%}
+            {{ form_errors(form) }}
+        {%- endif -%}
+        {{- block('form_rows') -}}
+        {{- form_rest(form) -}}
+
+
+        {%- if allow_add is defined and allow_add -%}
+            <a class="add-prototype-row"><i class="fa fa-plus-circle"></i></a>
+        {%- endif -%}
+    </div>
+{%- endblock form_widget_compound -%}
+
+{%- block collection_widget -%}
+    {% if prototype is defined %}
+        {%- set attr = attr|merge({'data-prototype': form_row(prototype) }) -%}
+    {% endif %}
+    {{- block('form_widget_compound') -}}
+{%- endblock collection_widget -%}
+
+{%- block textarea_widget -%}
+    <textarea {{ block('widget_attributes') }} class="form-control" >{{ value }}</textarea>
+{%- endblock textarea_widget -%}
+
+{%- block choice_widget -%}
+    {% if expanded %}
+        {{- block('choice_widget_expanded') -}}
+    {% else %}
+        {{- block('choice_widget_collapsed') -}}
+    {% endif %}
+{%- endblock choice_widget -%}
+
+{%- block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            {{- form_widget(child) -}}
+            {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
+            <br>
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}
+
+{%- block choice_widget_collapsed -%}
+    {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
+        {% set required = false %}
+    {%- endif -%}
+    <select {{ block('widget_attributes') }} class="form-control"  {% if multiple %} multiple="multiple"{% endif %}>
+        {%- if placeholder is not none -%}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain)) }}</option>
+        {%- endif -%}
+        {%- if preferred_choices|length > 0 -%}
+            {% set options = preferred_choices %}
+            {{- block('choice_widget_options') -}}
+            {%- if choices|length > 0 and separator is not none -%}
+                <option disabled="disabled">{{ separator }}</option>
+            {%- endif -%}
+        {%- endif -%}
+        {%- set options = choices -%}
+        {{- block('choice_widget_options') -}}
+    </select>
+{%- endblock choice_widget_collapsed -%}
+
+{%- block choice_widget_options -%}
+    {% for group_label, choice in options %}
+        {%- if choice is iterable -%}
+            <optgroup label="{{ choice_translation_domain is same as(false) ? group_label : group_label|trans({}, choice_translation_domain) }}">
+                {% set options = choice %}
+                {{- block('choice_widget_options') -}}
+            </optgroup>
+        {%- else -%}
+            <option value="{{ choice.value }}"{% if choice.attr %} {% set attr = choice.attr %}{{ block('attributes') }}{% endif %}{% if choice is selectedchoice(value) %} selected="selected"{% endif %}>{{ choice_translation_domain is same as(false) ? choice.label : choice.label|trans({}, choice_translation_domain) }}</option>
+        {%- endif -%}
+    {% endfor %}
+{%- endblock choice_widget_options -%}
+
+{%- block checkbox_widget -%}
+
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+
+{%- endblock checkbox_widget -%}
+
+{%- block radio_widget -%}
+    <input type="radio" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+{%- endblock radio_widget -%}
+
+{%- block datetime_widget -%}
+    <div class="date_time_wrapper">
+        {% if widget == 'single_text' %}
+            {{- block('form_widget_simple') -}}
+        {%- else -%}
+            <div {{ block('widget_container_attributes') }}>
+                {{- form_errors(form.date) -}}
+                {{- form_errors(form.time) -}}
+                {{- form_widget(form.date) -}}
+                {{- form_widget(form.time) -}}
+            </div>
+        {%- endif -%}
+    </div>
+{%- endblock datetime_widget -%}
+
+{%- block date_widget -%}
+    {%- if widget == 'single_text' -%}
+        {{ block('form_widget_simple') }}
+    {%- else -%}
+        <div {{ block('widget_container_attributes') }}>
+            {{- date_pattern|replace({
+                '{{ year }}':  form_widget(form.year),
+                '{{ month }}': form_widget(form.month),
+                '{{ day }}':   form_widget(form.day),
+            })|raw -}}
+        </div>
+    {%- endif -%}
+{%- endblock date_widget -%}
+
+{%- block time_widget -%}
+    {%- if widget == 'single_text' -%}
+        {{ block('form_widget_simple') }}
+    {%- else -%}
+        {%- set vars = widget == 'text' ? { 'attr': { 'size': 1 }} : {} -%}
+        <div {{ block('widget_container_attributes') }}>
+            {{ form_widget(form.hour, vars) }}{% if with_minutes %}:{{ form_widget(form.minute, vars) }}{% endif %}{% if with_seconds %}:{{ form_widget(form.second, vars) }}{% endif %}
+        </div>
+    {%- endif -%}
+{%- endblock time_widget -%}
+
+{%- block number_widget -%}
+    {# type="number" doesn't work with floats #}
+    {%- set type = type|default('text') -%}
+    {{ block('form_widget_simple') }}
+{%- endblock number_widget -%}
+
+{%- block integer_widget -%}
+    {%- set type = type|default('number') -%}
+    {{ block('form_widget_simple') }}
+{%- endblock integer_widget -%}
+
+{%- block money_widget -%}
+    {{ money_pattern|replace({ '{{ widget }}': block('form_widget_simple') })|raw }}
+{%- endblock money_widget -%}
+
+{%- block url_widget -%}
+    {%- set type = type|default('url') -%}
+    {{ block('form_widget_simple') }}
+{%- endblock url_widget -%}
+
+{%- block search_widget -%}
+    {%- set type = type|default('search') -%}
+    {{ block('form_widget_simple') }}
+{%- endblock search_widget -%}
+
+{%- block percent_widget -%}
+    {%- set type = type|default('text') -%}
+    {{ block('form_widget_simple') }} %
+{%- endblock percent_widget -%}
+
+{%- block password_widget -%}
+    {%- set type = type|default('password') -%}
+    {{ block('form_widget_simple') }}
+{%- endblock password_widget -%}
+
+{%- block hidden_widget -%}
+    {%- set type = type|default('hidden') -%}
+    {{ block('form_widget_simple') }}
+{%- endblock hidden_widget -%}
+
+{%- block email_widget -%}
+    {%- set type = type|default('email') -%}
+    {{ block('form_widget_simple') }}
+{%- endblock email_widget -%}
+
+{%- block range_widget -%}
+    {% set type = type|default('range') %}
+    {{- block('form_widget_simple') -}}
+{%- endblock range_widget %}
+
+{%- block button_widget -%}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+            '%name%': name,
+            '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</button>
+{%- endblock button_widget -%}
+
+{%- block submit_widget -%}
+    {%- set type = type|default('submit') -%}
+    {{ block('button_widget') }}
+{%- endblock submit_widget -%}
+
+{%- block reset_widget -%}
+    {%- set type = type|default('reset') -%}
+    {{ block('button_widget') }}
+{%- endblock reset_widget -%}
+
+{# Labels #}
+
+{%- block form_label -%}
+    {% if label is not same as(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</label>
+    {%- endif -%}
+{%- endblock form_label -%}
+
+{%- block button_label -%}{%- endblock -%}
+
+{# Rows #}
+
+{%- block repeated_row -%}
+    {#
+    No need to render the errors here, as all errors are mapped
+    to the first child (see RepeatedTypeValidatorExtension).
+    #}
+    {{- block('form_rows') -}}
+{%- endblock repeated_row -%}
+
+{%- block checkbox_row -%}
+    <div class="form-group">
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            {{- form_widget(form) -}}{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
+        </label>
+    </div>
+{%- endblock checkbox_row -%}
+
+{%- block form_row -%}
+    <div class="form-group">
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock form_row -%}
+
+{%- block button_row -%}
+    {{- form_widget(form) -}}
+{%- endblock button_row -%}
+
+{%- block hidden_row -%}
+    {{ form_widget(form) }}
+{%- endblock hidden_row -%}
+
+{# Misc #}
+
+{%- block form -%}
+    {{ form_start(form) }}
+    {{- form_widget(form) -}}
+    {{ form_end(form) }}
+{%- endblock form -%}
+
+{%- block form_start -%}
+    {% set method = method|upper %}
+    {%- if method in ["GET", "POST"] -%}
+        {% set form_method = method %}
+    {%- else -%}
+        {% set form_method = "POST" %}
+    {%- endif -%}
+    <form name="{{ name }}" method="{{ form_method|lower }}"{% if action != '' %} action="{{ action }}"{% endif %}{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+    {%- if form_method != method -%}
+        <input type="hidden" name="_method" value="{{ method }}" />
+    {%- endif -%}
+{%- endblock form_start -%}
+
+{%- block form_end -%}
+    {%- if not render_rest is defined or render_rest -%}
+        {{ form_rest(form) }}
+    {%- endif -%}
+    </form>
+{%- endblock form_end -%}
+
+{%- block form_enctype -%}
+    {% if multipart %}enctype="multipart/form-data"{% endif %}
+{%- endblock form_enctype -%}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <ul>
+            {%- for error in errors -%}
+                <li>{{ error.message }}</li>
+            {%- endfor -%}
+        </ul>
+    {%- endif -%}
+{%- endblock form_errors -%}
+
+{%- block form_rest -%}
+    {% for child in form -%}
+        {% if not child.rendered %}
+            {{- form_row(child) -}}
+        {% endif %}
+    {%- endfor %}
+{% endblock form_rest %}
+
+{# Support #}
+
+{%- block form_rows -%}
+    {% for child in form %}
+        {{- form_row(child) -}}
+    {% endfor %}
+{%- endblock form_rows -%}
+
+{%- block widget_attributes -%}
+    id="{{ id }}" name="{{ full_name }}"
+    {%- if read_only %} readonly="readonly"{% endif -%}
+    {%- if disabled %} disabled="disabled"{% endif -%}
+    {%- if required %} required="required"{% endif -%}
+    {%- for attrname, attrvalue in attr if 'readonly' != attrname or not read_only -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ translation_domain is same as(false) ? attrvalue : attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is same as(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock widget_attributes -%}
+
+{%- block widget_container_attributes -%}
+    {%- if id is not empty %}id="{{ id }}"{% endif -%}
+    {%- for attrname, attrvalue in attr -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ translation_domain is same as(false) ? attrvalue : attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is same as(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock widget_container_attributes -%}
+
+{%- block button_attributes -%}
+    id="{{ id }}" name="{{ full_name }}"{% if disabled %} disabled="disabled"{% endif -%}
+    {%- for attrname, attrvalue in attr -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ translation_domain is same as(false) ? attrvalue : attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is same as(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock button_attributes -%}
+
+{% block attributes -%}
+    {%- for attrname, attrvalue in attr -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ translation_domain is same as(false) ? attrvalue : attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is same as(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not same as(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock attributes -%}

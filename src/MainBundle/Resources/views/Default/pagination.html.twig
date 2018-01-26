@@ -1,0 +1,37 @@
+{% if pager is defined and pager is iterable %}
+    <div class="pagination">
+        {% set need_close = false %}
+        {% set urlParams = app.request.attributes.get('_route_params')|merge(app.request.query.all) %}
+        {% for page in pager %}
+            {% if page.type == constant('AdminBundle\\Service\\PagerService::TYPE_L_ARROW') %}
+                <a href="{{ path(app.request.attributes.get('_route'), urlParams|merge({'_page': page.id })) }}" class="prev">&lt;</a>
+            {% elseif page.type == constant('AdminBundle\\Service\\PagerService::TYPE_R_ARROW') %}
+                {% if need_close %}
+                    </ul>
+                    {% set need_close = false %}
+                {% endif %}
+                <a href="{{ path(app.request.attributes.get('_route'), urlParams|merge({'_page': page.id })) }}" class="next">&gt;</a>
+            {% else %}
+                {% if not need_close %}
+                    <ul>
+                    {% set need_close = true %}
+                {% endif %}
+
+                {% if page.active or page.type == constant('AdminBundle\\Service\\PagerService::TYPE_DOTS') %}
+                    <li class="{{ page.active?'active':'' }}">{{ page.title }}</li>
+                {% else %}
+                    <li>
+                        <a href="{{ path(app.request.attributes.get('_route'), urlParams|merge({'_page': page.id })) }}">
+                            {{ page.title }}
+                        </a>
+                    </li>
+                {% endif %}
+
+            {% endif %}
+        {% endfor %}
+
+        {% if need_close %}
+            </ul>
+        {% endif %}
+    </div>
+{% endif %}

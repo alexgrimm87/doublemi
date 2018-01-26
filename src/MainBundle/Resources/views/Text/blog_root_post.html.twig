@@ -1,0 +1,28 @@
+{% extends 'MainBundle:Text:blog_root.html.twig' %}
+
+{% block wrap_class_block %}blog-inner-wrap{% endblock %}
+
+{% block content_inner %}
+    <div class="blog-inner">
+        <h1>{{ post.title }}</h1>
+        <div class="blog-info">
+            <div class="blog-date">
+                <p>{{ post.created|site_date }}</p>
+            </div>
+            <ul class="blog-category">
+                {% for tag in post.tags %}
+                    {% if tag.enabled %}
+                        <li>
+                            <a href="{{ path(tag_path,{tag: tag.code}) }}">{{ tag.text }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="blog-content">
+            {{ post.text|raw }}
+        </div>
+
+    </div>
+{% endblock content_inner %}

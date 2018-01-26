@@ -1,0 +1,181 @@
+.form_error{
+    color: #ff0000;
+}
+
+.form_error>ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+.blog-main{
+    width: 100%;
+}
+
+.additional-selects .placeholder{
+    font-weight: 400;
+    font-size: 13px;
+    color: #99d6bc;
+    top: -15px;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+
+.additional-selects .ui-widget .el-input {
+    border-bottom: 0;
+    margin-bottom: -4px;
+}
+
+.size_list {
+    list-style-type:none;
+    margin:10px 0 0 0;
+    padding:0;
+    display: flex;
+}
+
+.size_list li {
+    margin:0 5px 0 0;
+    width:100px;
+    height:40px;
+    position:relative;
+    text-align: center;
+}
+
+.size_list label, .size_list input {
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+
+.size_list input[type="radio"] {
+    opacity:0.011;
+    z-index:100;
+}
+
+.size_list input[type="radio"]:checked + label {
+    background: #99d6bc;
+}
+
+.size_list label {
+    padding: 12px 0;
+    border:2px solid #ccc;
+    cursor:pointer;
+    z-index:90;
+    font-weight: 300;
+    font-size: 16px;
+    color: #2f2e2e;
+
+}
+
+.size_list label:hover {
+    background:#DDD;
+}
+
+.size_list_wrap h6 {
+    padding-bottom: 0!important;
+}
+
+.el-table .table-row .table-wrap-mobile .table-col:nth-child(2) {
+    width: 20%;
+}
+
+.el-table .table-row .table-wrap-mobile .table-col:nth-child(1) {
+    width: 45%;
+    padding-left: 30px;
+}
+
+.sub-item-parameters {
+    font-size: 14px;
+}
+
+.sub-item-parameters span{
+    font-weight: 400;
+}
+
+.sub-item-parameters div>span{
+    display: inline-block;
+    vertical-align: top;
+}
+.sub-item-parameters ul{
+    padding: 0 10px;
+    margin: 0;
+    list-style-type: none;
+    display: inline-block;
+}
+
+.margin-top-text-button{
+    margin-top: 50px;
+}
+
+.fresh-flowers-title-block p{
+    margin-bottom: 15px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #2f2e2e;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 29px;
+}
+
+.fresh-flowers-title-block img{
+    vertical-align: middle;
+    margin: 0 30px 0 0;
+    display: block;
+}
+
+.variants-bottom-up-txt{
+
+}
+.variants-bottom-up-txt h3{
+    margin: 0 0 9px 0;
+    font-weight: 400;
+}
+
+.order-profile-dop-info{
+    font-size: 12px;
+}
+.order-profile-dop-info p, .order-profile-dop-info ul{
+    margin: 3px 0;
+}
+
+.payment_block{
+    text-align: center;
+}
+
+.delivery-summ{
+    text-align: right;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding: 10px 0;
+    align-items: center;
+    border-bottom: 1px solid #ebebeb;
+    position: relative;
+}
+
+.delivery-summ>.table-col{
+    font-weight: 300;
+    font-size: 16px;
+    color: #2f2e2e;
+    text-align: right;
+    width: 100%;
+}
+
+.section-unmain-wrapper .pagination {
+    padding-bottom: 77px;
+}
+
+.section-unmain-wrapper.about-block {
+    padding-top: 0;
+    padding-bottom: 142px;
+}
+
+.registration-form h4 {
+    text-align: center;
+}

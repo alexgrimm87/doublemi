@@ -1,0 +1,17 @@
+services:
+    user.form.handler.registration:
+        class: UserBundle\Form\Handler\RegistrationFormHandler
+        arguments: ["@fos_user.registration.form", "@request", "@fos_user.user_manager", "@fos_user.mailer", "@fos_user.util.token_generator"]
+        scope: request
+        public: false
+    app.form.registration:
+        class: UserBundle\Form\RegistrationType
+        tags:
+            - { name: form.type, alias: app_user_registration }
+    app.userlist:
+        class: UserBundle\Admin\UserAdmin
+        arguments:  [ UserBundle\Entity\User ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.settings ] ]

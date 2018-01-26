@@ -1,0 +1,572 @@
+BC_DASHBOARD:                          Панель приборов
+BC_ROUTE_MAIN_CATALOG_SECTION_LIST:    Список разделов
+BC_ROUTE_MAIN_CATALOG_SECTION_EDIT:    Раздел
+BC_ROUTE_MAIN_CATALOG_SECTION_CREATE:  Новый раздел
+
+BC_ROUTE_MAIN_CATALOG_COLOR_LIST:      Список цветов
+BC_ROUTE_MAIN_CATALOG_COLOR_EDIT:      Цвет
+BC_ROUTE_MAIN_CATALOG_COLOR_CREATE:    Новый цвет
+
+BC_ROUTE_MAIN_CATALOG_OCCASION_LIST:   Список поводов
+BC_ROUTE_MAIN_CATALOG_OCCASION_EDIT:   Повод
+BC_ROUTE_MAIN_CATALOG_OCCASION_CREATE: Новый повод
+
+BC_ROUTE_MAIN_CATALOG_SEASON_LIST:     Список сезонов
+BC_ROUTE_MAIN_CATALOG_SEASON_EDIT:     Сезон
+BC_ROUTE_MAIN_CATALOG_SEASON_CREATE:   Новый сезон
+
+BC_ROUTE_MAIN_CATALOG_TARGET_LIST:     Список целей
+BC_ROUTE_MAIN_CATALOG_TARGET_EDIT:     Кому
+BC_ROUTE_MAIN_CATALOG_TARGET_CREATE:   Новая цель
+
+BC_ROUTE_MAIN_CATALOG_TYPE_LIST:       Список типов
+BC_ROUTE_MAIN_CATALOG_TYPE_EDIT:       Тип
+BC_ROUTE_MAIN_CATALOG_TYPE_CREATE:     Новый тип
+
+BC_ROUTE_MAIN_CATALOG_PACKAGE_LIST:   Список упаковок
+BC_ROUTE_MAIN_CATALOG_PACKAGE_EDIT:   Упаковка
+BC_ROUTE_MAIN_CATALOG_PACKAGE_CREATE: Новая упаковка
+
+BC_ROUTE_MAIN_CATALOG_SERVICE_LIST:   Список услуг
+BC_ROUTE_MAIN_CATALOG_SERVICE_EDIT:   Услуга
+BC_ROUTE_MAIN_CATALOG_SERVICE_CREATE: Новая услуга
+
+BC_ROUTE_MAIN_CATALOG_PRODUCT_LIST:   Список товаров
+BC_ROUTE_MAIN_CATALOG_PRODUCT_EDIT:   Товар
+BC_ROUTE_MAIN_CATALOG_PRODUCT_CREATE: Новый товар
+
+BC_ROUTE_MAIN_CATALOG_PRICERANGE_LIST:   Список цен
+BC_ROUTE_MAIN_CATALOG_PRICERANGE_EDIT:   Цена
+BC_ROUTE_MAIN_CATALOG_PRICERANGE_CREATE: Новая цена
+
+BC_ROUTE_MAIN_CATALOG_NOTE_LIST:     Список
+BC_ROUTE_MAIN_CATALOG_NOTE_EDIT:     Элемент
+BC_ROUTE_MAIN_CATALOG_NOTE_CREATE:   Новый
+
+BC_ROUTE_MAIN_CATALOG_FEATURES_LIST:     Список
+BC_ROUTE_MAIN_CATALOG_FEATURES_EDIT:     Элемент
+BC_ROUTE_MAIN_CATALOG_FEATURES_CREATE:   Новый
+
+BC_ROUTE_MAIN_CATALOG_RELATED_LIST:      Список
+BC_ROUTE_MAIN_CATALOG_RELATED_EDIT:      Элемент
+BC_ROUTE_MAIN_CATALOG_RELATED_CREATE:    Новый
+
+BC_ROUTE_MAIN_CATALOG_PRODUCTMAIN_LIST:     Список товаров
+BC_ROUTE_MAIN_CATALOG_PRODUCTMAIN_EDIT:     Товар
+BC_ROUTE_MAIN_CATALOG_PRODUCTMAIN_CREATE:   Новый товар
+
+BC_ROUTE_MAIN_CATALOG_PRODUCTUNMAIN_LIST:   Список дополнительных товаров
+BC_ROUTE_MAIN_CATALOG_PRODUCTUNMAIN_EDIT:   Товар
+BC_ROUTE_MAIN_CATALOG_PRODUCTUNMAIN_CREATE: Новый товар
+
+BC_ROUTE_MAIN_CONTACT_LIST:     Список контактов
+BC_ROUTE_MAIN_CONTACT_EDIT:     Контакт
+BC_ROUTE_MAIN_CONTACT_CREATE:   Новый контакт
+
+BC_ROUTE_MAIN_FEEDBACK_LIST:    Список отзывов
+BC_ROUTE_MAIN_FEEDBACK_EDIT:    Отзыв
+BC_ROUTE_MAIN_FEEDBACK_CREATE:  Новый отзыв
+
+BC_ROUTE_MAIN_AKCII_LIST:       Список акций
+BC_ROUTE_MAIN_AKCII_EDIT:       Акция
+BC_ROUTE_MAIN_AKCII_CREATE:     Новая акция
+
+BC_ROUTE_MAIN_EMAIL_LIST:       Список шаблонов
+BC_ROUTE_MAIN_EMAIL_EDIT:       Шаблон письма
+BC_ROUTE_MAIN_EMAIL_CREATE:     Новый шаблон
+
+BC_ROUTE_MAIN_SEOADMIN_LIST:       Список SEO
+BC_ROUTE_MAIN_SEOADMIN_EDIT:       Элемент
+BC_ROUTE_MAIN_SEOADMIN_CREATE:     Новый элемент
+
+BC_ROUTE_MAIN_MENUADMIN_LIST:       Пункты меню сайта
+BC_ROUTE_MAIN_MENUADMIN_EDIT:       Элемент
+BC_ROUTE_MAIN_MENUADMIN_CREATE:     Новый элемент
+
+BC_ROUTE_MAIN_CATALOG_SECTION_MAIN_LIST:       Список разделов
+BC_ROUTE_MAIN_CATALOG_SECTION_MAIN_EDIT:       Раздел
+BC_ROUTE_MAIN_CATALOG_SECTION_MAIN_CREATE:     Новый раздел
+
+BC_ROUTE_MAIN_CATALOG_SECTION_UNMAIN_LIST:       Список разделов
+BC_ROUTE_MAIN_CATALOG_SECTION_UNMAIN_EDIT:       Раздел
+BC_ROUTE_MAIN_CATALOG_SECTION_UNMAIN_CREATE:     Новый раздел
+
+BC_ROUTE_BLOG_POST_LIST:       Список постов
+BC_ROUTE_BLOG_POST_EDIT:       Пост
+BC_ROUTE_BLOG_POST_CREATE:     Новый пост
+
+BC_ROUTE_BLOG_TAG_LIST:       Список тегов
+BC_ROUTE_BLOG_TAG_EDIT:       Тег
+BC_ROUTE_BLOG_TAG_CREATE:     Новый тег
+
+BC_ROUTE_MAIN_INFO_LIST:       Список страниц
+BC_ROUTE_MAIN_INFO_EDIT:       Страница
+BC_ROUTE_MAIN_INFO_CREATE:     Новая страница
+
+BC_ROUTE_MAIN_CALLREQUEST_LIST:       Список заказов
+BC_ROUTE_MAIN_CALLREQUEST_EDIT:       Заказ
+BC_ROUTE_MAIN_CALLREQUEST_CREATE:     Новый заказ
+
+BC_ROUTE_MAIN_PORTFOLIO_LIST:       Портфолио
+BC_ROUTE_MAIN_PORTFOLIO_EDIT:       Проект
+BC_ROUTE_MAIN_PORTFOLIO_CREATE:     Новый проект
+
+BC_ROUTE_MAIN_DELIVERY_LIST:       Доставка
+BC_ROUTE_MAIN_DELIVERY_EDIT:       Элемент
+BC_ROUTE_MAIN_DELIVERY_CREATE:     Новый элемент
+
+BC_ROUTE_MAIN_PAGEFIGURE_LIST:       Элементы на главной
+BC_ROUTE_MAIN_PAGEFIGURE_EDIT:       Элемент
+BC_ROUTE_MAIN_PAGEFIGURE_CREATE:     Новый элемент
+
+BC_ROUTE_MAIN_SERVICEREQUEST_LIST:          Список заказов
+BC_ROUTE_MAIN_SERVICEREQUEST_EDIT:          Заказ
+BC_ROUTE_MAIN_SERVICEREQUEST_CREATE:        Новый заказ
+
+BC_ROUTE_MAIN_INDIVIDUALREQUEST_LIST:       Список заказов
+BC_ROUTE_MAIN_INDIVIDUALREQUEST_EDIT:       Заказ
+BC_ROUTE_MAIN_INDIVIDUALREQUEST_CREATE:     Новый заказ
+
+BC_ROUTE_APP_USERLIST_LIST:                 Список пользователей
+BC_ROUTE_APP_USERLIST_EDIT:                 Пользователь
+BC_ROUTE_APP_USERLIST_CREATE:               Новый пользователь
+
+BC_ROUTE_MAIN_ORDER_LIST:                   Список заказов
+BC_ROUTE_MAIN_ORDER_EDIT:                   Заказ
+BC_ROUTE_MAIN_ORDER_CREATE:                 Новый заказ
+
+BC_ROUTE_MAILING_SUBSCRIBE_LIST:            Список подпищиков
+BC_ROUTE_MAILING_SUBSCRIBE_EDIT:            Подпищик
+BC_ROUTE_MAILING_SUBSCRIBE_CREATE:          Новый подпищик
+
+BC_ROUTE_MAILING_TEMPLATE_LIST:            Список писем
+BC_ROUTE_MAILING_TEMPLATE_EDIT:            Письмо
+BC_ROUTE_MAILING_TEMPLATE_CREATE:          Новое письмо
+
+BC_ROUTE_MAIN_BOUQUETSUBSCRIBE_LIST:            Список заявок подписки на цветы
+BC_ROUTE_MAIN_BOUQUETSUBSCRIBE_EDIT:            Заявка
+BC_ROUTE_MAIN_BOUQUETSUBSCRIBE_CREATE:          Новая заявка
+
+blog:
+    archive:                          Архив
+    title:                            Блог
+    post:                             Посты
+    tag:                              Теги
+
+app:
+    userlist:                         Список пользователей
+
+menu:
+    search:                           Страница поиска
+    bouquetsubscribe:                 Подписка на цветы
+    mailing:                          Рассылка
+    order:                            Заказы
+    portfolio:                        Портфолио
+    blog:                             Блог
+    blog_archive:                     Архив блога
+    mobile:                           Мобильное меню
+    top:                              Меню сверху
+    main:                             Основное меню
+    footer:                           Меню в подвале
+    catalog:                          Каталог
+    catalogparametrs:                 Параметры товаров
+    connection:                       Связь
+    information:                      Информация
+    settings:                         Настройки
+    index:                            Главная страница
+    akcii_root:                       Акции
+    catalog_main_root:                Каталог
+    catalog_unmain_root:              Каталог подарков к цветам
+    contact_page:                     Контакты
+    feedback_root:                    Страница отзывов
+    fos_user_profile_show:            Личный кабинет
+    individual:                       Индивидуальный букет
+
+footer:
+    service:                          Услуги
+    clients:                          Клиентам
+    conditions:                       Условия
+    inform:                           Информация
+
+main:
+    bouquetsubscribe:                 Подписка на цветы
+    order:                            Список заказов
+    individualrequest:                Заказ индивид. букета
+    servicerequest:                   Заказ мероприятия
+    pagefigure:                       Элементы на главной
+    delivery:                         Доставка
+    portfolio:                        Портфолио
+    callrequest:                      Заказ звонка
+    info:                             Текстовые страницы
+    email:                            Шаблоны писем
+    contact:                          Контакты
+    feedback:                         Отзывы
+    akcii:                            Акции
+    seoadmin:                         SEO
+    menuadmin:                        Меню
+    catalog:
+        section:                      Разделы
+        section.main:                 Основные разделы
+        section.unmain:               Дополнительные разделы
+        color:                        Цвет
+        occasion:                     Повод
+        season:                       Сезон
+        target:                       Кому
+        type:                         Тип
+        package:                      Упаковка
+        service:                      Дополнительные услуги
+        product:                      Товары
+        pricerange:                   Промежуток цен
+        note:                         Сказать
+        features:                     Особенности
+        related:                      Сопутствующая информ.
+        productmain:                  Товары
+        productunmain:                Дополнительные товары
+
+
+main_bouquetsubscribe.list:                Список заявок на подписку
+main_bouquetsubscribe.edit:                Редактировать заявку
+main_bouquetsubscribe.delete:              Удалить заявку
+main_bouquetsubscribe.create:              Новая заявка
+
+mailing_template.list:                Список писем
+mailing_template.edit:                Редактировать письмо
+mailing_template.delete:              Удалить письмо
+mailing_template.create:              Новое письмо
+
+mailing_subscribe.list:                Список подпищиков
+mailing_subscribe.edit:                Редактировать подпищика
+mailing_subscribe.delete:              Удалить подпищика
+mailing_subscribe.create:              Новый подпищик
+
+main_order.list:                Список заказов
+main_order.edit:                Редактировать данные заказа
+main_order.delete:              Удалить заказ
+main_order.create:              Новый заказ
+
+app_userlist.list:                Список пользователей
+app_userlist.edit:                Редактировать данные пользователя
+app_userlist.delete:              Удалить пользователя
+app_userlist.create:              Новый пользователь
+
+main_individualrequest.list:                Список заказов на индивидуальный букет
+main_individualrequest.edit:                Редактировать заказ
+main_individualrequest.delete:              Удалить заказ
+main_individualrequest.create:              Новый заказ
+
+main_servicerequest.list:                Список заказов мероприятий
+main_servicerequest.edit:                Редактировать заказ
+main_servicerequest.delete:              Удалить заказ
+main_servicerequest.create:              Новый заказ
+
+main_pagefigure.list:                Элементы на главной
+main_pagefigure.edit:                Редактировать элемент
+main_pagefigure.delete:              Удалить элемент
+main_pagefigure.create:              Новый элемент
+
+main_delivery.list:                Доставка
+main_delivery.edit:                Редактировать элемент
+main_delivery.delete:              Удалить элемент
+main_delivery.create:              Новый элемент
+
+main_portfolio.list:                Портфолио
+main_portfolio.edit:                Редактировать проект
+main_portfolio.delete:              Удалить проект
+main_portfolio.create:              Новый проект
+
+main_callrequest.list:                Список заказов
+main_callrequest.edit:                Редактировать заказ
+main_callrequest.delete:              Удаление  заказа звонка
+main_callrequest.create:              Новый заказ
+
+main_info.list:                       Список страниц
+main_info.edit:                       Редактировать страницу
+main_info.delete:                     Удаление  страницы
+main_info.create:                     Новая страница
+
+blog_tag.list:                        Список тег
+blog_tag.edit:                        Редактировать тег
+blog_tag.delete:                      Удаление тега
+blog_tag.create:                      Новый тег
+
+blog_post.list:                       Список постов
+blog_post.edit:                       Редактировать пост
+blog_post.delete:                     Удаление поста
+blog_post.create:                     Новый пост
+
+main_menuadmin.list:                  Список пунктов меню
+main_menuadmin.edit:                  Редактировать элемент
+main_menuadmin.delete:                Удаление элемента
+main_menuadmin.create:                Новый элемент
+
+main_seoadmin.list:                   Список SEO
+main_seoadmin.edit:                   Редактировать элемент
+main_seoadmin.delete:                 Удаление элемента
+main_seoadmin.create:                 Новый элемент
+
+main_email.list:                      Список шаблонов
+main_email.edit:                      Редактировать шаблон
+main_email.delete:                    Удаление шаблона
+main_email.create:                    Новый шаблон
+
+main_akcii.list:                      Список акций
+main_akcii.edit:                      Редактировать акцию
+main_akcii.delete:                    Удаление акции
+main_akcii.create:                    Новая акция
+
+main_feedback.list:                   Список отзывов
+main_feedback.edit:                   Редактировать отзыв
+main_feedback.delete:                 Удаление отзыва
+main_feedback.create:                 Новый отзыв
+
+main_contact.list:                    Список контакт
+main_contact.edit:                    Редактировать контакт
+main_contact.delete:                  Удаление контакта
+main_contact.create:                  Новый контакт
+
+main_catalog_section_main.list:            Список разделов
+main_catalog_section_main.edit:            Редактировать раздел
+main_catalog_section_main.delete:          Удаление раздела
+main_catalog_section_main.create:          Новый раздел
+
+main_catalog_section_unmain.list:          Список разделов
+main_catalog_section_unmain.edit:          Редактировать раздел
+main_catalog_section_unmain.delete:        Удаление раздела
+main_catalog_section_unmain.create:        Новый раздел
+
+main_catalog_color.list:              Список цветов
+main_catalog_color.edit:              Редактировать цвет
+main_catalog_color.delete:            Удаление цвета
+main_catalog_color.create:            Новый цвет
+
+main_catalog_occasion.list:           Список поводов
+main_catalog_occasion.edit:           Редактировать повод
+main_catalog_occasion.delete:         Удаление повода
+main_catalog_occasion.create:         Новый повод
+
+main_catalog_season.list:             Список сезонов
+main_catalog_season.edit:             Редактировать сезон
+main_catalog_season.delete:           Удаление сезона
+main_catalog_season.create:           Новый сезон
+
+main_catalog_target.list:             Список целей
+main_catalog_target.edit:             Редактировать цель
+main_catalog_target.delete:           Удаление цели
+main_catalog_target.create:           Новая цель
+
+main_catalog_type.list:               Список типов
+main_catalog_type.edit:               Редактировать тип
+main_catalog_type.delete:             Удаление типа
+main_catalog_type.create:             Новый тип
+
+main_catalog_package.list:            Список упаковок
+main_catalog_package.edit:            Редактировать упаковку
+main_catalog_package.delete:          Удаление упаковки
+main_catalog_package.create:          Новая упаковка
+
+main_catalog_service.list:            Список услуг
+main_catalog_service.edit:            Редактировать услугу
+main_catalog_service.delete:          Удаление услуги
+main_catalog_service.create:          Новая услуга
+
+main_catalog_product.list:            Список товаров
+main_catalog_product.edit:            Редактировать товар
+main_catalog_product.delete:          Удаление товара
+main_catalog_product.create:          Новый товар
+
+main_catalog_pricerange.list:         Список цен
+main_catalog_pricerange.edit:         Редактировать цену
+main_catalog_pricerange.delete:       Удаление цены
+main_catalog_pricerange.create:       Новая цена
+
+main_catalog_note.list:               Список
+main_catalog_note.edit:               Редактировать
+main_catalog_note.delete:             Удаление
+main_catalog_note.create:             Новый
+
+main_catalog_features.list:           Список
+main_catalog_features.edit:           Редактировать
+main_catalog_features.delete:         Удаление
+main_catalog_features.create:         Новый
+
+main_catalog_related.list:            Список
+main_catalog_related.edit:            Редактировать
+main_catalog_related.delete:          Удаление
+main_catalog_related.create:          Новый
+
+
+main_catalog_productmain.list:            Список товаров
+main_catalog_productmain.edit:            Редактировать товар
+main_catalog_productmain.delete:          Удаление товара
+main_catalog_productmain.create:          Новый товар
+
+main_catalog_productunmain.list:            Список товаров
+main_catalog_productunmain.edit:            Редактировать товар
+main_catalog_productunmain.delete:          Удаление товара
+main_catalog_productunmain.create:          Новый товар
+
+Id:	                                  ID
+Title:	                              Название
+Main:	                              Главный
+Parent section:	                      Родительский раздел
+Pos:                                  Индекс сортировки
+Enabled:                              Доступный
+Code:                                 Код
+Price:                                Цена
+Text:                                 Описание
+Meta title:                           Заголовок браузера
+Meta description:                     Описание
+Meta key words:                       Ключевые слова
+Picture file:                         Картинка
+Catalog section:                      Раздел каталога
+Type:         	                      Тип товара
+Target:         	                  Кому
+Occasion:         	                  Повод
+Note:         	                      Сказать
+Color:          	                  Цвет
+Season:         	                  Сезон
+Link:         	                      Ссылка
+Service:                              Услуги
+Related info:                         Сопутствующая информация
+Features:                             Особенности товара
+Compound:                             Состав
+Moscow free delivery:                 Бесплатная доставка по Москве
+Package:                              Упаковка
+base:                                 Основная информация
+seo:                                  SEO
+params:                               Параметры
+Picture:                              Картинка
+Name:                                 Имя
+Date:                                 Дата
+Theme:                                Тема
+Question:                             Вопрос
+Score:                                Оцентка
+Similar akcii:                        Недавние акции
+Address:                              Адресс
+Phone 1:                              Телефон 1
+Phone 2:                              Телефон 2
+Bonus product:                        Дополнительные товары
+Work time:                            Рабочее время
+Phone:                                Телефон
+On main:                              Отображать на главной
+main_page:                            Главная страница
+Main title:                           Название на главной
+Main sub title:                       Подназвание
+Main picture:                         Картинка
+Main discount:                        Скидка
+In delivery:                          В блоке доставки
+In present:                           В блоке подарков
+In wedding:                           В блоке свадебной флористики
+Individual picture:                   Картинка в блоке индивидуального букета
+Text day delivery:                    Текст блока о доскавке в тот же день
+Text free delivery:                   Текст блока о бесплатной доставке
+Free delivery limit:                  Минимальная цена заказа для бесплатной доставки
+Delivery price:                       Цена доставки
+Locked:                               Заблокирован
+Plain password:                       Запланированый пароль
+Roles:                                Роли
+ROLE_USER:                            Пользователь
+ROLE_ADMIN:                           Администратор
+Status:                               Статус
+Call back text:                       Текст попапа при перезвоне
+Payment:                              Оплата
+online:                               Онлайн
+cash:                                 Наличными
+new:                                  Новый
+paid:                                 Оплачен
+in_work:                              В работе
+done:                                 Закрыт
+Org name:                             Наименование органицзации
+Uri address:                          Юридический адрес
+Fact address:                         Фактический адрес
+Inn:                                  ИНН/КПП
+Uri phone:                            Телефон
+Bank name:                            Наименование банка
+Bank checking index:                  P/C
+Bank correspondent index:             К/С
+Bank index:                           БИК
+Dop email:                            Дополнительный E-mail
+user_type:                            Тип
+fiz:                                  Физическое лицо
+uri:                                  Юридическое лицо
+bank_info:                            Банковская информация
+org_info:                             Информация об организации
+Delivery name:                        Имя получателя
+Delivery phone:                       Телефон получателя
+
+#order stuff
+Self receive:               Получает товар сам
+Incognito:                  Прозьба не разглашать имя
+Free card:                  Добавить бесплатную открытку
+Card text:                  Тест открытки
+Card sign:                  Подпись открытки
+Delivery:                   Способ получения
+Call for address:           Уточнить адрес через телефон
+Delivery city:              Город доставки
+Delivery street:            Улица доставки
+Catalog payment:            Способ оплаты
+Summ:                       Сумма заказа
+One click order:            Заказ в один клик
+Global seo text:            Общий СЕО текст
+Parent:                     Родительский пункт
+
+search:                     Поиск
+User:                       Пользователь
+Params:                     Параметры
+Negative flower:            Нежелательные цветы
+Comment:                    Коментарий
+Delivery date:              Дата доставки
+individual_title:           Индивидуальный букет
+title:                      Название
+subtitle:                   Описание
+markup:                     Наценка
+Sizes:                      Размеры товара
+In menu:                    Отображать в меню
+In catalog menu:            Отображать в меню "доставки цветов"
+In gift menu:               Отображать в меню "подарков"
+In wedding menu:            Отображать в меню "свадебной флористики"
+Favorite:                   В избранном
+archive:                    В архиве
+Archive:                    В архиве
+In search block:            В блоке поиска
+In Search Block:            В блоке поиска
+Tags:                       Теги
+Description:                Аннотация
+Created:                    Дата создания
+Mobile:                     Мобильное
+Top:                        Топ
+Footer:                     Подвал
+Url:                        Ссылка
+Col:                        Колонка
+catalog_title:              Доставка цветов
+gift_title:                 Подарки к цветам
+Serv:                       Услуги
+Feature:                    Особенности товара
+Subject:                    Тема
+Firstname:                  Имя
+Lastname:                   Фамилия
+Page:                       Cтраница
+Slider:                     Слайдер
+Form:
+    email:                      E-mail
+    password:                   Пароль
+    password confirmation:      Подтверждение пароля
+    new password:               Новый пароль
+    new password confirmation:  Подтверждение нового пароля
+
+month_1:                    Январь
+month_2:                    Февраль
+month_3:                    Март
+month_4:                    Апрель
+month_5:                    Май
+month_6:                    Июнь
+month_7:                    Июль
+month_8:                    Август
+month_9:                    Сентябрь
+month_10:                   Октябрь
+month_11:                   Ноябрь
+month_12:                   Декабрь
+
+mailing:
+    template:               Письма
+    subscribe:              Подпищики

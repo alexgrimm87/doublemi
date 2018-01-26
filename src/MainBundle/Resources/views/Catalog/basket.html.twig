@@ -1,0 +1,249 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block wrap_class %}
+{% endblock %}
+
+{% block content %}
+    <section class="wrap-busket fiz-lico">
+        <div class="mbox2">
+            <div class="basket-title">
+                <div class="title"><h1>Оформление заказа</h1></div>
+            </div>
+            <div class="basket-subtitle">
+                <h3 class="subtitle">Корзина</h3>
+                <a href="{{ path('catalog_main_root') }}" class="contin">Продолжить покупки</a>
+            </div>
+            <div class="el-table basket_table_holder">
+                {% if basket %}
+                    <div class="table-row table-header">
+                        <div class="table-col"></div>
+                        <div class="table-wrap-mobile">
+                            <div class="table-col">Товар</div>
+                            <div class="table-col">Цена</div>
+                            <div class="table-col">Кол-во</div>
+                            <div class="table-col">Сумма</div>
+                        </div>
+                    </div>
+                    {% for key, item in basket %}
+                        {% set link = 'javascript:void(0);' %}
+                        {% if item.product.catalogSection %}
+                            {% set route_element = item.product.catalogSection.main ? 'catalog_main_section_product' : 'catalog_unmain_section_product' %}
+                            {% set link = path(route_element, {section_code: item.product.catalogSection.code ,product_code: item.product.code }) %}
+                        {% endif %}
+                        <div class="table-row" data-item="{{ key }}">
+                            <div class="table-col">
+                                <div class="photo"><a href="{{ link }}" ><img src="{{ item.product.picture ? item.product.picture|imagine_filter('basket_item') : '/placeholder.svg' }}" alt=""></a></div>
+                            </div>
+                            <div class="table-wrap-mobile">
+                                <div class="table-col">
+                                    <div class="name">
+                                        <a href="{{ link }}">{{ item.product.title }}</a>
+                                        <div class="sub-item-parameters">
+                                            {% if item.size %}
+                                                <p><span>Размер:</span> {{ item.size.title }}</p>
+                                            {% endif %}
+                                            {% if item.package %}
+                                                <p><span>Упаковка:</span> {{ item.package.title }}</p>
+                                            {% endif %}
+                                            {% if item.serv.count > 0 %}
+                                               <div>
+                                                   <span>Дополнительно:</span>
+                                                    <ul>
+                                                        {% for serv in item.serv %}
+                                                            <li>
+                                                                {{ serv.title }} <span>{{ serv.price|price_markup }}</span>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                               </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-col">
+                                    <div class="price" data-value="{{ item.price }}">{{ item.price|price|shity_price('<span>$1</span>')|raw }}</div>
+                                </div>
+                                <div class="table-col">
+                                    <input type="number" name="number" class="js-number" min="1" value="{{ item.count }}" data-url="{{ path('change_count_basket',{key: key}) }}">
+                                </div>
+                                <div class="table-col">
+                                    <div class="summ">{{ (item.count*item.price)|price|shity_price('<span>$1</span>')|raw }}</div>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0)" class="delete" data-url="{{ path('remove_from_basket',{key: key}) }}"></a>
+                        </div>
+                    {% endfor %}
+                    <div class="delivery-summ" data-value="{{ price_delivery }}" data-limit="{{ price_limit }}" >
+                        <div class="table-col">
+                            Доставка: <b><span>0</span> руб.</b>
+                        </div>
+                    </div>
+                    <div class="table-row table-summ">
+                        <div class="table-col">
+                            ИТОГО: <b><span>0</span> руб.</b>
+                        </div>
+                    </div>
+                {% else %}
+                    Нет товаров
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    {% if basket %}
+        <section class="wrap-busket-jur">
+            <div class="mbox2">
+                <form action="{{ path('root_basket') }}" class="form-jur">
+                    <div class="form-col">
+                        <h4 class="form-title">1. Детали заказа:</h4>
+                        <div class="form-field form-field-xl">
+                            <input type="text" name="form[name]" class="el-input" placeholder="Ваше имя" required="required" maxlength="250" value="{{ form_params.name is defined ? form_params.name : '' }}">
+                        </div>
+                        {% if not app.user %}
+                            <div class="form-field form-field-xl">
+                                <input type="email" name="form[email]" class="el-input" placeholder="Ваш E-mail" required="required" maxlength="250">
+                            </div>
+                            <div class="checkboxes">
+                                <div class="form-field checkbox">
+                                    <input type="checkbox" name="form[need_registration]" class="js-checkbox" id="create_registration" value="1">
+                                    <label for="create_registration">Зарегистрироватся</label>
+                                </div>
+                            </div>
+                            <div class="form-field form-field-xl hidden_registration" style="display: none;" >
+                                <input type="password" name="form[password]" class="el-input" placeholder="Пароль" required="required" minlength="5" maxlength="250">
+                            </div>
+                            <div class="form-field form-field-xl hidden_registration" style="display: none;">
+                                <input type="password" name="form[password_confirm]" class="el-input" placeholder="Подтверждение пароля" required="required" minlength="5" maxlength="250">
+                            </div>
+                        {% endif %}
+                        <div class="form-field form-field-xl">
+                            <input type="text" name="form[phone]" class="el-input phone tel-mask" placeholder="Контактный телефон" required="required" maxlength="250" value="{{ form_params.phone is defined ? form_params.phone : '' }}" >
+                        </div>
+                        <div class="checkboxes">
+                            <div class="form-field checkbox">
+                                <input type="checkbox" name="form[selfReceive]" class="js-checkbox" id="forme" value="1">
+                                <label for="forme">Я получаю букет сам</label>
+                            </div>
+                            <div class="form-field checkbox">
+                                <input type="checkbox" name="form[incognito]" class="js-checkbox" id="anonim" value="1">
+                                <label for="anonim">Не разглашать моё имя  получателю</label>
+                            </div>
+                            <div class="form-field checkbox">
+                                <input type="checkbox" name="form[freeCard]" class="js-checkbox" id="free-paper" value="1">
+                                <label for="free-paper">Добавить бесплатную открытку</label>
+                            </div>
+                        </div>
+                        <div class="form-field form-field-xl">
+                            <textarea name="form[cardText]" class="el-textarea" placeholder="Текст открытки"></textarea>
+                        </div>
+                        <div class="form-field form-field-xl">
+                            <input type="text" name="form[cardSign]" class="el-input" placeholder="Подпись"  maxlength="250">
+                        </div>
+
+                        <div class="form-field form-field-xl uri_info_form_block" style="display: none;" >
+                            <input type="text" name="form[orgName]" class="el-input" placeholder="Наименование органицзации"  maxlength="2048" required="required">
+                        </div>
+                        <div class="form-field form-field-xl uri_info_form_block" style="display: none;" >
+                            <input type="text" name="form[uriAddress]" class="el-input" placeholder="Юридический адрес"  maxlength="2048" required="required">
+                        </div>
+                        <div class="form-field form-field-xl uri_info_form_block" style="display: none;" >
+                            <input type="text" name="form[factAddress]" class="el-input" placeholder="Фактический адрес"  maxlength="2048" required="required">
+                        </div>
+                        <div class="form-field form-field-xl uri_info_form_block" style="display: none;" >
+                            <input type="text" name="form[uriPhone]" class="el-input phone tel-mask" placeholder="Телефон"  maxlength="2048" required="required">
+                        </div>
+                        <div class="form-field form-field-xl uri_info_form_block" style="display: none;" >
+                            <input type="text" name="form[inn]" class="el-input" placeholder="ИНН/КПП"  maxlength="2048" required="required">
+                        </div>
+                        <div class="form-field form-field-xl uri_info_form_block" style="display: none;" >
+                            <input type="text" name="form[bankName]" class="el-input" placeholder="Наименование банка"  maxlength="2048" required="required">
+                        </div>
+                        <div class="form-field form-field-xl uri_info_form_block" style="display: none;" >
+                            <input type="text" name="form[bankCheckingIndex]" class="el-input" placeholder="P/C"  maxlength="2048" required="required">
+                        </div>
+                        <div class="form-field form-field-xl uri_info_form_block" style="display: none;" >
+                            <input type="text" name="form[bankCorrespondentIndex]" class="el-input" placeholder="К/С"  maxlength="2048" required="required">
+                        </div>
+                        <div class="form-field form-field-xl uri_info_form_block" style="display: none;" >
+                            <input type="text" name="form[bankIndex]" class="el-input" placeholder="БИК"  maxlength="2048" required="required">
+                        </div>
+
+                    </div>
+                    <div class="form-col">
+                        <h4 class="form-title">2. Доставка</h4>
+                        <input type="hidden" name="form[delivery]" value="1" id="delivery_hidden_input"/>
+                        <ul class="tab-menu">
+                            <li><a href="#" data-value="1" class="delivery_hidden_input_trigger">Доставка</a></li>
+                            <li><a href="#" data-value="2" class="delivery_hidden_input_trigger">Самовывоз</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="content">
+                                <div class="form-field checkbox">
+                                    <input type="checkbox" name="form[callForAddress]" class="js-checkbox" id="callme" value="1">
+                                    <label for="callme">Узнать адрес, созвонившись с получателем</label>
+                                </div>
+                                <div class="form-field city">
+                                    <input type="text" name="form[deliveryCity]" class="el-input" placeholder="Город" value="{{ form_params.delivery_city is defined ? form_params.delivery_city : '' }}">
+                                </div>
+                                <div class="form-field street">
+                                    <input type="text" name="form[deliveryStreet]" class="el-input" placeholder="Улица" value="{{ form_params.delivery_street is defined ? form_params.delivery_street : '' }}">
+                                </div>
+
+                                <div class="form-field ">
+                                    <input type="text" name="form[deliveryName]" class="el-input" placeholder="Имя получателя" value="{{ form_params.deliveryName is defined ? form_params.deliveryName : '' }}" required="required" >
+                                </div>
+                                <div class="form-field ">
+                                    <input type="text" name="form[deliveryPhone]" class="el-input phone tel-mask" placeholder="Телефон получателя" value="{{ form_params.deliveryPhone is defined ? form_params.deliveryPhone : '' }}" required="required" >
+                                </div>
+                                <p>
+                                    {% if price_limit %}
+                                        Бесплатная доставка осуществляется от суммы <b style="display: inline-block;">{{ price_limit|number_format(0, '.', ' ') }}</b> рублей.
+                                    {% endif %}
+                                </p>
+                                <div class="form-field deliv-date">
+                                    <input type="hidden" name="form[deliveryDate]" id="delivery_date_input">
+                                    <span>Дата доставки:</span>
+                                    <div class="wrap-datepicker">
+                                        <input type="text" class="datepicker" name="deliveryDate_date" id="delivery_date_input_date">
+                                    </div>
+                                    <select name="deliveryDate_time" class="js_select-dotted" id="delivery_date_input_time">
+                                        <option value="09:00">09:00</option>
+                                        <option value="10:00">10:00</option>
+                                        <option value="11:00">11:00</option>
+                                        <option value="12:00">12:00</option>
+                                        <option value="13:00">13:00</option>
+                                        <option value="14:00">14:00</option>
+                                        <option value="15:00">15:00</option>
+                                        <option value="16:00">16:00</option>
+                                        <option value="17:00">17:00</option>
+                                        <option value="18:00">18:00</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="form-field checkbox">
+                                    <input type="checkbox" name="callme" class="js-checkbox" id="alone" value="1">
+                                    <label for="alone">Самовывоз</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-field">
+                            <textarea name="form[comment]" class="el-textarea" placeholder="Комментарий к заказу"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        {% if payment_list %}
+                            <h4 class="form-title">3. Способ оплаты</h4>
+                            {% for payment in payment_list %}
+                                <div class="form-field">
+                                    <input type="radio" name="form[catalogPayment]" class="js-radio {{ payment.uriInfo ? 'uri_info' : '' }}" id="payment_{{ loop.index }}" value="{{ payment.id }}" {% if loop.first %}checked{% endif %}>
+                                    <label for="payment_{{ loop.index }}">{{ payment.title }}{% if payment.description %}<span>{{ payment.description }}</span>{% endif %}</label>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <input type="submit" class="el-button" value="Оформить заказ">
+                    </div>
+                </form>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

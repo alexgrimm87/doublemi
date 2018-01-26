@@ -1,0 +1,23 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+
+{% block content %}
+    <section class="wrap-forgot">
+        <div class="mbox2">
+            <div class="forgot-content">
+                <div class="entrance-form">
+                    <div class="form-field">
+                        <h2>Регистрация пройшла успешно</h2>
+                    </div>
+                    <div class="form-field">
+                        <p>{{ 'registration.check_email'|trans({'%email%': user.email}, 'FOSUserBundle') }}</p>
+                    </div>
+                </div>
+                <div class="links">
+                    <a href="{{ path('fos_user_registration_register') }}">Ещё нет акаунта?</a>
+                    <a href="{{ path('fos_user_resetting_request') }}">Забыли пароль?</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

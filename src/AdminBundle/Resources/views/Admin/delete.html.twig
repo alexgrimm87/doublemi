@@ -1,0 +1,40 @@
+{% extends 'AdminBundle:Admin:base.html.twig' %}
+
+{% form_theme admin.data.form 'AdminBundle:Form:fields.html.twig' %}
+
+{% block admin_page_content_content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-body table-responsive ">
+                    <b>Подтверждение удаления</b>
+                    <p>Вы действительно хотите удалить выбранный элемент?</p>
+                </div>
+                <div class="box-footer clearfix">
+                    {{ form_start(admin.data.form) }}
+                    {{ form_row(admin.data.form._token) }}
+
+                    {{ form_row(admin.data.form.save) }}
+
+                    {% set edit = admin.service.editCheck ? admin.generatePathName('edit') : false %}
+                    {% set list = admin.service.listCheck ? admin.generatePathName('list') : false %}
+                    {% if edit %}
+                        или
+                        <a class="btn btn-success" href="{{ path(edit,{id: admin.data.item.id}) }}">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                            Редактировать
+                        </a>
+                    {% elseif list %}
+                        или
+                        <a class="btn btn-success" href="{{ path(list) }}">
+                            <i class="fa fa-list" aria-hidden="true"></i>
+                            Вернуться к списку
+                        </a>
+
+                    {% endif %}
+                    {{ form_end(admin.data.form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

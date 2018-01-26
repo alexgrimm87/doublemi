@@ -1,0 +1,19 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <section class="wrap-forgot">
+        <div class="mbox2">
+            <div class="forgot-content">
+                <div class="entrance-form">
+                    <div class="form-field">
+                        <h2>Поздравляем</h2>
+                    </div>
+                    <div class="form-field">
+                        <p>{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
+                    </div>
+                    <a href="{{ path('fos_user_profile_show') }}" class="el-button">Кабинет</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

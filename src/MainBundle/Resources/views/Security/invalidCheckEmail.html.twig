@@ -1,0 +1,23 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+
+{% block content %}
+    <section class="wrap-forgot">
+        <div class="mbox2">
+            <div class="forgot-content">
+                <div class="entrance-form">
+                    <div class="form-field">
+                        <h2>Ошибка</h2>
+                    </div>
+                    <div class="form-field">
+                        <p>Неверный код активации</p>
+                    </div>
+                </div>
+                <div class="links">
+                    <a href="{{ path('fos_user_registration_register') }}">Ещё нет акаунта?</a>
+                    <a href="{{ path('fos_user_resetting_request') }}">Забыли пароль?</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

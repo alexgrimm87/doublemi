@@ -1,0 +1,30 @@
+{% extends 'MainBundle:Profile:base.html.twig' %}
+
+{% block cabinet_tab %}
+    <div class="cabinet-tab active">
+        <div class="change-password-form">
+            <form action="{{ path('fos_user_profile_edit') }}" class="fix-profil" method="post">
+                <h2 class="title title-left">Редактировать профиль</h2>
+                <div class="form-field">
+                    <input type="text" name="form[firstname]" class="el-input" placeholder="Имя" required="required" value="{{ app.user.firstname }}">
+                </div>
+                <div class="form-field">
+                    <input type="text" name="form[lastname]" class="el-input" placeholder="Фамилия" required="required" value="{{ app.user.lastname }}">
+                </div>
+                <div class="form-field">
+                    <input type="email" name="form[dopEmail]" class="el-input" placeholder="Дополнительный E-mail" value="{{ app.user.dopEmail }}" >
+                </div>
+                <div class="form-field">
+                    <input type="tel" name="form[phone]" class="el-input tel-mask" placeholder="Телефон" required="required" value="{{ app.user.phone }}">
+                </div>
+                <div class="form-field">
+                    <input type="text" name="form[inn]" class="el-input" placeholder="ИНН" required="required" value="{{ app.user.inn }}">
+                </div>
+                <div class="buttons">
+                    <input type="submit" class="el-button" value="Сохранить">
+                    <a href="{{ path('fos_user_profile_edit') }}" class="cancel">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

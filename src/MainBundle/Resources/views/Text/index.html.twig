@@ -1,0 +1,237 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block global_wrap_class %}main-header{% endblock %}
+{% block wrap_class %}main-global{% endblock %}
+
+{% block content %}
+    {% if main_params.delivery_show is defined and main_params.delivery_show %}
+        <section class="delivery-block mbox2">
+            <h1>
+                <a href="{{ path('catalog_main_root') }}">{{ main_params.delivery_title is defined ? main_params.delivery_title : '' }}</a>
+            </h1>
+            <ul class="delivery-wrap">
+                {% for item in delivery %}
+                    <li>
+                        <div class="el-figure">
+                            <figure>
+                                <div class="pic-wrap">
+                                    <img src="{{ item.picture ? item.picture|imagine_filter('blog_post_block') : '/placeholder.svg' }}" alt="{{ item.title }}">
+                                </div>
+                                <figcaption>{{ item.title }}</figcaption>
+                            </figure>
+                            <div class="price">
+                                <p>{{ item.price|shity_price|raw }}</p>
+                            </div>
+                        </div>
+                        <div class="flower-description">
+                            <p>{{ item.description }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="subtitle">
+                <p>{{ main_params.delivery_subtitle is defined ? main_params.delivery_subtitle : '' }}</p>
+            </div>
+        </section>
+    {% endif %}
+
+    {% if main_params.present_show is defined and main_params.present_show %}
+        <section class="gifts-block">
+            <div class="mbox2">
+                <h2>
+                    <a href="{{ path('catalog_unmain_root') }}">{{ main_params.present_title is defined ? main_params.present_title : '' }}</a>
+                </h2>
+                <div class="gifts-wrap">
+                    {% set separator = present|length / 2 %}
+                    <div class="gifts-slider-wrap">
+                        <a class="gifts-arrow gifts-prev giftsPrev1" href="#"></a>
+                        <div class="gifts-slider giftsSlider1">
+                            {% for item in present %}
+                                {% if loop.index <= separator %}
+                                    <a class="gifts-item el-figure js-figure-popup" href="{{ item.picture }}">
+                                        <figure>
+                                            <div class="pic-wrap">
+                                                <img src="{{ item.picture ? item.picture|imagine_filter('blog_post_block') : '/placeholder.svg' }}" alt="{{ item.title }}">
+                                            </div>
+                                            <figcaption>{{ item.title }}</figcaption>
+                                        </figure>
+                                        <div class="price"><p>{{ item.price|shity_price|raw }}</p></div>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <a class="gifts-arrow gifts-next giftsNext1" href="#"></a>
+                    </div>
+
+                    <div class="gifts-center">
+                        {{ main_params.present_text is defined ? main_params.present_text|raw : '' }}
+                    </div>
+
+                    <div class="gifts-slider-wrap">
+                        <a class="gifts-arrow gifts-prev giftsPrev2" href="#"></a>
+                        <div class="gifts-slider giftsSlider2">
+                            {% for item in present %}
+                                {% if loop.index > separator %}
+                                    <a class="gifts-item el-figure js-figure-popup" href="{{ item.picture }}">
+                                        <figure>
+                                            <div class="pic-wrap">
+                                                <img src="{{ item.picture ? item.picture|imagine_filter('blog_post_block') : '/placeholder.svg' }}" alt="{{ item.title }}">
+                                            </div>
+                                            <figcaption>{{ item.title }}</figcaption>
+                                        </figure>
+                                        <div class="price"><p>{{ item.price|shity_price|raw }}</p></div>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <a class="gifts-arrow gifts-next giftsNext2" href="#"></a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {% if main_params.individual_show is defined and main_params.individual_show %}
+        <section class="perfect-block mbox2">
+            <div class="perfect-bouquet">
+                <div class="bouquet-pic el-bouquet">
+                    <img
+                        src="{{ main_params.individual_picture is defined ? main_params.individual_picture : '/placeholder.svg' }}"
+                        alt="{{ main_params.individual_title is defined ? main_params.individual_title : '' }}"
+                    />
+                    <div class="perfect-circle">
+                        <div class="circle-title">
+                            {{ main_params.individual_text is defined ? main_params.individual_text|raw : '' }}
+                        </div>
+                        <div class="circle-price">
+                            {{ main_params.individual_text_price is defined ? main_params.individual_text_price|raw : '' }}
+                        </div>
+                    </div>
+                </div>
+                <div class="perfect-list-wrap">
+                    <h2>
+                        <a href="{{ path('route_individual') }}">{{ main_params.individual_title is defined ? main_params.individual_title : '' }}</a>
+                    </h2>
+                    {% if main_params.individual_step is defined and main_params.individual_step is not empty %}
+                        <ul>
+                            {% for row_step in main_params.individual_step %}
+                                <li>{{ row_step.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <a class="el-button" href="{{ path('route_individual') }}">Заказать индивидуальный букет</a>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {% if akcii is defined and akcii is not empty and main_params.akcii_show is defined and main_params.akcii_show %}
+        <section class="shares-block">
+            <h2>
+                <a href="{{ path('akcii_root') }}">{{ main_params.akcii_title is defined ? main_params.akcii_title : '' }}</a>
+            </h2>
+            <div class="shares-slider">
+                {% for item in akcii %}
+                    <div class="shares-item">
+                        <img src="{{ item.mainPicture ? item.mainPicture|imagine_filter('big_slider_block') : '/placeholder.svg' }}" alt="{{ item.title }}">
+                        <div class="slider-content">
+                            <h3>{{ item.mainTitle }}</h3>
+                            <div class="subtitle"><p>{{ item.mainSubTitle }}</p></div>
+                            <div class="discount">{{ item.mainDiscount }}</div>
+                            <a class="el-button" href="{{ path('akcii_element',{code: item.code}) }}">Подробнее</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+
+    {% if main_params.wedding_show is defined and main_params.wedding_show and wedding %}
+        <section class="wedding-block mbox2">
+            <h2>
+                <a href="/i/svadebnaya-floristica">{{ main_params.wedding_title is defined ? main_params.wedding_title : '' }}</a>
+            </h2>
+            <ul class="wedding-floristry">
+                {% for item in wedding %}
+                <li>
+                    <a class="el-figure js-figure-popup" href="{{ item.picture ? item.picture : '/placeholder.svg' }}">
+                        <figure>
+                            <div class="pic-wrap">
+                                <img src="{{ item.picture ? item.picture|imagine_filter('blog_post_block') : '/placeholder.svg' }}" alt="{{ item.title }}">
+                            </div>
+                            <figcaption>{{ item.title }}</figcaption>
+                        </figure>
+                        <div class="price"><p>{{ item.price|shity_price|raw }}</p></div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% endif %}
+
+    {% if main_params.service_show is defined and main_params.service_show %}
+        <section class="events-block">
+            <div class="events-outer-wrap">
+                <h2>
+                    <a href="/i/serving">{{ main_params.service_title is defined ? main_params.service_title : '' }}</a>
+                </h2>
+                <div class="events-wrap">
+                    <blockquote>
+                        {{ main_params.service_text is defined ? main_params.service_text|raw : '' }}
+                    </blockquote>
+                    <div class="reg-events">
+                        <h3>Заказать</h3>
+                        <form class="events-form" action="{{ path('service_request') }}" method="post">
+                            <div class="form-field el-input-anim">
+                                <input type="text" name="name" required />
+                                <span class="bar"></span>
+                                <label>Имя</label>
+                            </div>
+                            <div class="form-field el-input-anim">
+                                <input type="tel" name="phone" class="tel-mask" required />
+                                <span class="bar"></span>
+                                <label>Телефон</label>
+                            </div>
+                            <div class="form-field el-input-anim">
+                                <input type="email" name="email" required />
+                                <span class="bar"></span>
+                                <label>E-mail</label>
+                            </div>
+                            <button type="submit" class="el-button">Отправить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {% if main_params.portfolio_show is defined and main_params.portfolio_show %}
+        <section class="portfolio-block">
+            <h2>
+                <a href="{{ path('portfolio_root') }}">{{ main_params.portfolio_title is defined ? main_params.portfolio_title : '' }}</a>
+            </h2>
+            {% if main_params.portfolio_slider is defined and main_params.portfolio_slider is not empty %}
+                <div class="portfolio-slider">
+                    {% for slide in main_params.portfolio_slider %}
+                        <a class="portfolio-item" rel="gallery1" href="{{ slide }}" data-fancybox="gallery">
+                            <img src="{{ slide|imagine_filter('portfolio_slider_block') }}" alt="">
+                            <div class="zoom-icon"></div>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="slider-controls">
+                    <a class="slider-arrow slider-prev portfolio-prev" href="#"></a>
+                    <a class="slider-arrow slider-next portfolio-next" href="#"></a>
+                </div>
+            {% endif %}
+        </section>
+    {% endif %}
+
+    {% if main_params.about_show is defined and main_params.about_show %}
+        <section class="about-block mbox2">
+            <h2>{{ main_params.about_title is defined ? main_params.about_title : '' }}</h2>
+            {{ main_params.about_text is defined ? main_params.about_text|raw : '' }}
+        </section>
+    {% endif %}
+{% endblock content %}

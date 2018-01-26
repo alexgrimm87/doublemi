@@ -1,0 +1,52 @@
+{% extends 'AdminBundle:Admin:base.html.twig' %}
+
+{% form_theme admin.data.form 'AdminBundle:Form:fields.html.twig' %}
+
+{% block admin_page_content_content %}
+    <div class="row">
+        <div class="col-lg-9">
+            <div class="box box-primary">
+                <div class="box-body table-responsive ">
+                    <div class="admin-ba-collapsed-fields">
+                        {% include 'AdminBundle:Admin:form.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="box box-primary">
+                <div class="box-body table-responsive text-center">
+                    {% set delete = admin.service.deleteCheck ? admin.generatePathName('delete') : false %}
+                    {% set list = admin.service.listCheck ? admin.generatePathName('list') : false %}
+
+                    {% if admin.linkOnSite %}
+                        <div>
+                            <a class="btn btn-success " href="{{ admin.linkOnSite }}" target="_blank">
+                                <i class="fa fa-arrow-circle-o-up" aria-hidden="true"></i>
+                                Открыть на сайте
+                            </a>
+                        </div>
+                    {% endif %}
+                    <hr>
+                    {% if list %}
+                        <div>
+                            <a class="btn btn-success " href="{{ path(list) }}">
+                                <i class="fa fa-list" aria-hidden="true"></i>
+                                Вернуться к списку
+                            </a>
+                        </div>
+                    {% endif %}
+                    <hr>
+                    {% if delete %}
+                        <div>
+                            <a class="btn btn-danger " href="{{ path(delete,{id: admin.data.item.id}) }}">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                Удалить
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

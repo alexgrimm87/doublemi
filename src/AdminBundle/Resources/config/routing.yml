@@ -1,0 +1,11 @@
+admin_dashboard:
+    path: /
+    defaults: { _controller: AdminBundle:Default:index }
+
+admin_config:
+    path: /config
+    defaults: { _controller: AdminBundle:Config:index }
+
+admin_custom_page:
+    resource: .
+    type: admin_page

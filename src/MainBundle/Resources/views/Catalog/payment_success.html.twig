@@ -1,0 +1,20 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block wrap_class %}
+{% endblock %}
+
+{% block global_wrap_class %}main-header{% endblock %}
+
+{% block content %}
+    <section class="wrap-busket fiz-lico">
+        <div class="mbox2">
+            <div class="basket-title">
+                <div class="title"><h1>Оформление заказа</h1></div>
+            </div>
+            <div class="payment_block">
+                <p>Заказ успешно оплачен</p>
+                <a href="{{ path('index') }}" style="margin: auto;" class="el-button">Перейти на главную</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

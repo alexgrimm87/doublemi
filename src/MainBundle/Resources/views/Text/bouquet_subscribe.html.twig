@@ -1,0 +1,120 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+
+{% block global_wrap_class %}subscribe-header{% endblock %}
+{% block wrap_class %}portfolio{% endblock %}
+
+{% block content %}
+    <section class="for-beloved mbox2">
+        <div class="for-beloved-wrap">
+            <div class="bouquet-pic el-bouquet">
+                {% if page.picture is defined %}
+                    <img src="{{ page.picture }}" alt="">
+                {% endif %}
+                <div class="perfect-circle">
+                    <div class="circle-title">
+                        {{ page.picture_text|default('')|raw }}
+                    </div>
+                </div>
+            </div>
+            <div class="fresh-flowers fresh-flowers-title-block">
+                <div class="title">
+                    <h2>{{ page.title|default('') }}</h2>
+                </div>
+                {{ page.description|default('')|raw }}
+
+                <a href="#subscribe-popup" class="el-button margin-top-text-button fancybox_open">Оформить подписку</a>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="variants mbox2">
+        {% if page.block_1_show is defined and page.block_1_show %}
+            <div class="variants-top">
+                <div class="variants-top-left">
+                    <h2>{{ page.block_1_title|default('') }}</h2>
+                    {{ page.block_1_text|default('')|raw }}
+                </div>
+                <div class="variants-top-right">
+                    {% if page.block_1_picture is defined and page.block_1_picture %}
+                        <img src="{{ page.block_1_picture|imagine_filter('individual_pic') }}" alt="">
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+        {% if page.block_2_show is defined and page.block_2_show %}
+            <div class="variants-bottom">
+                <div class="variants-bottom-left">
+                    {% if page.block_2_picture is defined and page.block_2_picture %}
+                        <img src="{{ page.block_2_picture|imagine_filter('individual_pic') }}" alt="">
+                    {% endif %}
+                </div>
+                <div class="variants-bottom-right">
+                    <div class="variants-bottom-up">
+                        <h2>{{ page.block_2_title|default('') }}</h2>
+                        <div class="variants-bottom-up-txt">
+                            {{ page.block_2_text|default('')|raw }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+
+    {% if page.portfolio_show is defined and page.portfolio_show and sub_page.portfolio_slider is defined and sub_page.portfolio_slider %}
+        <section class="portfolio-block">
+        <h2>{{ sub_page.portfolio_title|default('') }}</h2>
+        <div class="portfolio-slider">
+            {% for slide in sub_page.portfolio_slider %}
+                <a class="portfolio-item" rel="gallery1" href="{{ slide }}" data-fancybox="gallery">
+                    <img src="{{ slide|imagine_filter('portfolio_slider_block') }}" alt="">
+                    <div class="zoom-icon"></div>
+                </a>
+            {% endfor %}
+        </div>
+        <div class="slider-controls">
+            <a class="slider-arrow slider-prev portfolio-prev" href="#"></a>
+            <a class="slider-arrow slider-next portfolio-next" href="#"></a>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if review_list %}
+        <section class="reviews-block">
+            <div class="mbox2">
+                <h2>Отзывы</h2>
+                <div class="reviews-slider">
+                    {% for item in review_list %}
+                        <div class="reviews-item">
+                            <figure>
+                                <div class="avatar">
+
+                                    <img src="{{ item.picture ? item.picture|imagine_filter('instagram_block_mini') : '/placeholder.svg' }}" alt="avatar">
+                                </div>
+                                <figcaption>{{ item.title }}</figcaption>
+                            </figure>
+                            <ul class="feedback-stars">
+                                {% for i in 1..5 %}
+                                    <li {{ i <= item.score ? 'class="active"' : '' }}></li>
+                                {% endfor %}
+                            </ul>
+                            <div class="reviews-text">
+                                <p>{{ item.text|nl2br }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="slider-controls">
+                    <a class="slider-arrow slider-prev reviews-prev" href="#"></a>
+                    <a class="slider-arrow slider-next reviews-next" href="#"></a>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+    {% if page.text is defined and page.text%}
+        <section class="about-block mbox2">
+            {{ page.text|raw }}
+        </section>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,96 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <section class="gallery mbox2">
+        <h1>{{ page.title is defined ? page.title : 'Портфолио' }}</h1>
+        <div class="gallery-info gallery-stuff">
+            {{ page.text is defined ? page.text|raw : ''}}
+            {% if page.list %}
+                <ul class="gallery-list">
+                    {% for element in page.list %}
+                        <li>{{ element.title }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        {% set limit = 6 %}
+        {% for item in objects.items %}
+            <div class="gallery-item">
+                <h3><a rel="gallery1" href="{{ path('portfolio_element',{code: item.code}) }}">{{ item.title }}</a></h3>
+                <div class="gallery-outer">
+                    <div class="gallery-inner">
+                        {% for slide in item.slider %}
+                            {% if loop.index0 < limit %}
+                                <a rel="gallery1" href="{{ slide }}" data-fancybox="gallery"><img src="{{ slide|imagine_filter('portfolio_block') }}" alt=""></a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="more-photos">
+                        <a href="{{ path('portfolio_element',{code: item.code}) }}">Еще фото >></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        {% include 'MainBundle:Default:pagination.html.twig' %}
+
+    </section>
+    {% if instagram is defined and instagram is not empty %}
+        <div class="statistics mbox2">
+
+            <div class="instagram">
+                {{ instagram.text is defined ? instagram.text|raw : '' }}
+            </div>
+
+            {% if instagram.profile is defined %}
+                <div class="statistics-inner">
+                    <div class="logo">
+                        <div class="logo-pic">
+                            <img src="{{ instagram.picture is defined ? instagram.picture|imagine_filter('instagram_block_mini') : '/placeholder.svg' }}" alt="logo">
+                        </div>
+                        <div class="logo-text">
+                            <p>{{ instagram.profile is defined ? instagram.profile : '' }}</p>
+                        </div>
+                    </div>
+                    <div class="statistics-item posts">
+                        {% if instagram.post is defined %}
+                            <span style="font-weight: 700;">{{ instagram.post }}</span>
+                            <p>Посты</p>
+                        {% endif %}
+                    </div>
+                    <div class="statistics-item subscribers">
+                        {% if instagram.subscribers is defined %}
+                            <span style="font-weight: 700;">{{ instagram.subscribers }}</span>
+                            <p>Подписчики</p>
+                        {% endif %}
+                    </div>
+                    <div class="statistics-item subscriptions">
+                        {% if instagram.subscribe is defined %}
+                            <span style="font-weight: 700;">{{ instagram.subscribe }}</span>
+                            <p>Подписки</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if instagram.slider is defined %}
+                <div class="pic-tabs-wrap">
+                    {% for item in instagram.slider %}
+                        {% if loop.first %}
+                            <a href="{{ item }}" class="pic-content" data-fancybox>
+                                <img src="{{ item|imagine_filter('portfolio_block') }}" alt="">
+                                <div class="preload"></div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                    <ul class="pic-tabs">
+                        {% for item in instagram.slider %}
+                            <li data-medium="{{ item|imagine_filter('portfolio_block') }}" data-large="{{ item }}">
+                                <img src="{{ item|imagine_filter('blog_post_block_mini') }}" alt="">
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

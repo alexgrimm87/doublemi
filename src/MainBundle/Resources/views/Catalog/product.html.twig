@@ -1,0 +1,240 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block wrap_class %}
+{% endblock %}
+
+{% block hidden_block %}
+    {{ parent() }}
+
+    {% for key,info in object.relatedInfo %}
+        <div id="{{ 'to_news' ~ key }}" class="news-popup">
+            <div class="news-content">
+                {{ info.text|raw }}
+            </div>
+            {% if info.link %}
+                <a href="{{ info.link }}" class="el-button" >Подробнее</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock hidden_block %}
+
+
+{% block content %}
+    <section class="wrap-card">
+        <div class="mbox2">
+            <div class="card-content">
+                <div class="navbar">
+                    <h2>Категории</h2>
+                    <ul class="main-list">
+                        {% for section in sections %}
+                            {% if not section.parentSection %}
+                                <li class="{{ active_section_code == section.code ? 'active' : '' }}" >
+                                    <a href="{{ path('catalog_main_section',{section_code: section.code}) }}">
+                                        {{ section.title }}
+                                    </a>
+                                    <ul>
+                                        {% for subsection in sections %}
+                                            {% if subsection.parentSection == section %}
+                                                <li class="{{ active_section_code == subsection.code ? 'active' : '' }}" >
+                                                    <a href="{{ path('catalog_main_section',{section_code: subsection.code}) }}">
+                                                        {{ subsection.title }}
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+
+                    <a href="{{ path('akcii_root') }}" class="sales-link">АКЦИИ</a>
+                </div>
+
+                <div class="bouquet">
+                    <form action="{{ path('add_to_basket') }}" method="post">
+                        <input type="hidden" name="product" value="{{ object.id }}">
+                        <div class="bouquet__info">
+                            <div class="bouquet__desc">
+                                {% if object.slider %}
+                                    <div class="bouquet-sider">
+                                        {% for slide in object.slider %}
+                                            <a href="{{ slide }}" rel="cardGallery" data-fancybox="cardGallery">
+                                                <img src="{{ slide|imagine_filter('product_slider_block') }}" alt="">
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                    {% if object.slider|length > 1 %}
+                                        <div class="bouquet-sider-nav">
+                                            {% for slide in object.slider %}
+                                                <div class="slider-item">
+                                                    <img src="{{ slide|imagine_filter('product_slider_block_mini') }}" alt="">
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                {% elseif object.picture %}
+                                    <div class="bouquet-sider">
+                                        <a href="{{ object.picture }}" rel="cardGallery" data-fancybox="cardGallery">
+                                            <img src="{{ object.picture|imagine_filter('product_slider_block') }}" alt="">
+                                        </a>
+                                    </div>
+                                {% endif %}
+
+                                {% if object.compound %}
+                                <div class="consist">СОСТАВ:</div>
+                                <p>{{ object.compound }}</p>
+                                {% endif %}
+                                {% if object.text %}
+                                    <div class="description">Описание:</div>
+                                    {{ object.text|raw }}
+                                {% endif %}
+                            </div>
+                            <div class="bouquet__order">
+                                <h1>{{ object.title }}</h1>
+                                {% set base_price = object.price %}
+                                {% set price = base_price %}
+                                {% if object.size is defined and object.size[0]['markup'] is defined %}
+                                    {% set price = price + object.size[0]['markup'] %}
+                                {% endif %}
+                                <div class="price price_str_viewer">{{ price|price }}</div>
+                                <div class="buttons">
+                                    <a href="#" class="order add_2_basket" >Заказать</a>
+                                    <a href="#" class="el-button one_click_buy" >Купить в 1 клик</a>
+                                </div>
+                                {% if object.size %}
+                                    <div class="size_list_wrap">
+                                        <h6>Размеры:</h6>
+                                        <ui class="size_list size_list_handler">
+                                            {% for size in object.size %}
+                                                <li>
+                                                    <input id="size_index_{{ loop.index }}" type="radio" name="size" value="{{ size.title }}" data-price="{{ ( base_price + size.markup )|price }}" {{ loop.index == 1 ? 'checked="checked"' : '' }}/>
+                                                    <label for="size_index_{{ loop.index }}">{{ size.title }}</label>
+                                                </li>
+                                            {% endfor %}
+                                        </ui>
+                                    </div>
+                                {% endif %}
+                                <div class="deliv-date">
+                                    <span>Дата доставки:</span>
+                                    <div class="wrap-datepicker">
+                                        <input type="text" class="datepicker" name="date">
+                                    </div>
+                                    <select name="time" class="js_select-dotted">
+                                        <option value="09:00">09:00</option>
+                                        <option value="10:00">10:00</option>
+                                        <option value="11:00">11:00</option>
+                                        <option value="12:00">12:00</option>
+                                        <option value="13:00">13:00</option>
+                                        <option value="14:00">14:00</option>
+                                        <option value="15:00">15:00</option>
+                                        <option value="16:00">16:00</option>
+                                        <option value="17:00">17:00</option>
+                                        <option value="18:00">18:00</option>
+                                    </select>
+                                </div>
+
+                                {{ config_params.text_day_delivery|default('')|raw }}
+                                {% if object.moscowFreeDelivery %}
+                                    <div class="free-deliv">{{ config_params.text_free_delivery|default('')|raw }}</div>
+                                {% endif %}
+
+                                <h6>ДОПОЛНИТЕЛЬНО</h6>
+                                <div class="additional-selects">
+                                    <div class="widget-wrap active">
+                                        <div class="ui-widget ">
+                                            <input class="el-input" type="number" name="count" placeholder="" min="1" required value="1"/>
+                                            <span class="placeholder">Количество</span>
+                                        </div>
+                                    </div>
+                                    {% if object.package.count %}
+                                        <div class="select-wrap">
+                                            <select name="package" class="js-beautiful" data-placeholder="">
+                                                <option value=""></option>
+                                                {% for package in object.package %}
+                                                    {% if package.enabled %}
+                                                        <option value="{{ package.id }}">{{ package.title }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                            <span class="placeholder">Упаковка</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                {% for service in object.serv %}
+                                    {% if service.enabled %}
+                                        <div class="checkbox">
+                                            <input type="checkbox" class="js-checkbox" id="service_{{ service.id }}" name="service[]" value="{{ service.id }}" >
+                                            <label for="service_{{ service.id }}">{{ service.title }} <b>+ {{ service.price|price }}</b></label>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% for key,info in object.relatedInfo %}
+                                    <a href="{{ '#to_news' ~ key }}" class="to-news">
+                                        {% if info.picture %}
+                                            <span class="icon"><img src="{{ info.picture }}" alt=""></span>
+                                        {% endif %}
+                                        <span class="desc">
+                                            <span class="ttl">{{ info.title }}</span>
+                                            <p>{{ info.description }}</p>
+                                        </span>
+                                    </a>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </form>
+                    <div class="bouquet__subinfo">
+                        {% for feature in object.feature %}
+                            <div class="subinfo-item">
+                                {% if feature.picture %}
+                                    <div class="pic"><img src="{{ feature.picture }}" alt=""></div>
+                                {% endif %}
+                                <div class="ttl">{{ feature.title }}</div>
+                                <p>{{ feature.description }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    {% if object.bonusProduct.count > 0 and bonus_product_sections %}
+                        <div class="bouquet__addition">
+                        <h2>Приятные дополнения к букету </h2>
+                        <ul class="tabs-list">
+                            {% for section_element in bonus_product_sections %}
+                                <li><a href="#">{{ section_element.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        <div class="tabs">
+                            {% for section_element in bonus_product_sections %}
+                                <div class="tab-content">
+                                    <ul>
+                                        {% for product_element in object.bonusProduct.toArray %}
+                                            {% if product_element.catalogSection == section_element %}
+                                                <li>
+                                                    <div class="sale-item">
+                                                        <a href="{{ path('catalog_unmain_section_product',{section_code: product_element.catalogSection.code, product_code: product_element.code}) }}" class="to-category">
+                                                            <span class="pic">
+                                                                 <img src="{{ product_element.picture?product_element.picture|imagine_filter('product_block'):image_placeholder }}" alt="">
+
+                                                            </span>
+                                                            <p>{{ product_element.title }}</p>
+                                                            <span class="price">{{ product_element.price|price }}</span>
+                                                        </a>
+                                                        <a href="{{ path('catalog_unmain_section_product',{section_code: product_element.catalogSection.code, product_code: product_element.code}) }}" class="to-basket el-button">Подробнее</a>
+                                                    </div>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <a href="{{ path('catalog_main_section',{section_code: object.catalogSection.code}) }}" class="all">Смотреть все товары категории</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

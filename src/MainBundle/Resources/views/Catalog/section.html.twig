@@ -1,0 +1,90 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block wrap_class %}category-filter{% endblock %}
+
+{% block content %}
+    <section class="wrap-category">
+        <div class="mbox2">
+            <form method="get">
+                <div class="sorting-wrap">
+                    <div class="title"><h1>{{ page_title|trans }}</h1></div>
+                    <div class="sorting">
+                        <div class="sort-item">
+                            <span>Сортировка:</span>
+                            <select name="_sort" class="sort-by js_select">
+                                {% for key,par in sortParams %}
+                                    <option value="{{ key ~ '_' ~ par.order }}" {{ sortParamsActive.sort == key and sortParamsActive.order == par.order ? 'selected="selected"' : '' }}>
+                                        {{ par.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="sort-item">
+                            <span>Показать:</span>
+                            <select name="_limit" class="number js_select">
+                                {% for l in limitParams %}
+                                    <option value="{{ l }}" {{ l == limitParamsActive ? 'selected="selected"' : '' }}>{{ l }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                {% if filterParams is defined and filterParams is not empty %}
+                    <div class="filter">
+                        <ul class="filter-list">
+                            {% for param in filterParams %}
+                                <li class="{{ param.active ?'active': ''  }}">
+                                    <a href="#">{{ param.name }}</a>
+                                    <span>{{ param.active ?: '' }}</span>
+                                    <ul class="dropdown {{ param.items|length>6?'column-2':'' }}">
+                                        {% for item in param.items %}
+                                            <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </form>
+            <div class="sales-list">
+                {% if objects.items %}
+                    <ul>
+                    {% for item in objects.items  %}
+                        <li>
+                            <div class="sale-item">
+                                <div class="visible-overlay">
+                                    <a href="{{ path('catalog_main_section_product',{section_code: item.catalogSection.code, product_code: item.code}) }}" class="to-category">
+                                            <span class="pic">
+                                                <img src="{{ item.picture?item.picture|imagine_filter('product_block'):image_placeholder }}" alt="">
+                                            </span>
+                                        <p>{{ item.title }}</p>
+                                        <span class="price">{{ item.price|price }}</span>
+                                    </a>
+                                    <a href="{{ path('catalog_main_section_product',{section_code: item.catalogSection.code, product_code: item.code}) }}" class="to-basket el-button">
+                                        Подробнее
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                    Поиск не дал результатов
+                {% endif %}
+            </div>
+
+            {% include 'MainBundle:Default:pagination.html.twig' %}
+
+        </div>
+    </section>
+    {% if page_text %}
+        <section class="about-block mbox2">
+            {{ page_text|raw }}
+        </section>
+    {% elseif params.config.global_seo_text is defined %}
+        <section class="about-block mbox2">
+            {{ params.config.global_seo_text|raw }}
+        </section>
+    {% endif %}
+{% endblock content %}

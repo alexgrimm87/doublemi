@@ -1,0 +1,15 @@
+services:
+    blog.post:
+        class: BlogBundle\Admin\PostAdmin
+        arguments:  [ BlogBundle\Entity\Post ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.blog ] ]
+    blog.tag:
+        class: BlogBundle\Admin\TagAdmin
+        arguments:  [ BlogBundle\Entity\Tag ]
+        tags:
+            - { name: admin.sheepfish }
+        calls:
+            - [ setGroup, [ menu.blog ] ]

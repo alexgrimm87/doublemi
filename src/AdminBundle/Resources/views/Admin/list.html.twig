@@ -1,0 +1,96 @@
+{% extends 'AdminBundle:Admin:base.html.twig' %}
+
+
+{% block admin_page_content_header %}
+
+    {{ parent() }}
+
+    {% if admin.service.createCheck %}
+    <a style="float: right;" class="btn" href="{{ path(admin.generatePathName('create')) }}">
+        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+        Добавить новый
+    </a>
+    {% endif %}
+
+{% endblock admin_page_content_header %}
+
+
+{% block admin_page_content_content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-body table-responsive no-padding">
+
+                    {% if admin.data.items %}
+                        <table class="table table-bordered table-striped admin-ba-list">
+                            <thead>
+                                <tr class="admin-ba-list-field-header">
+                                    {% for field in admin.data.fields %}
+                                        <th class="admin-ba-list-field-header-text">
+                                            {{ field.label|default(field.name)|humanize|trans }}
+                                        </th>
+                                    {% endfor %}
+
+                                    <th class="admin-ba-list-field-header-text " style="width: 300px; ">
+                                        Действия
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% set edit = admin.service.editCheck ? admin.generatePathName('edit') : false %}
+                                {% set delete = admin.service.deleteCheck ? admin.generatePathName('delete') : false %}
+                                {% for item in admin.data.items %}
+                                    <tr>
+                                        {% for field in admin.data.fields %}
+                                            <td class="admin-ba-list-field admin-ba-list-field-text" objectid="{{ item.id }}">
+                                                {% set var = attribute(item, field.name) %}
+                                                {% if field.callback is defined %}
+                                                    {{ var|callback(field.callback) }}
+                                                {% elseif var.timestamp is defined %}
+                                                    {{ var|date(field.format|default('d/m/Y')) }}
+                                                {% else %}
+                                                    {{ var }}
+                                                {% endif %}
+                                            </td>
+                                        {% endfor %}
+
+                                        <td class="sonata-ba-list-field sonata-ba-list-field-text" objectid="{{ item.id }}">
+
+
+                                            <div class="btn-group">
+
+                                                {% if edit %}
+                                                    <a href="{{ path(edit,{id: item.id}) }}" class="btn btn-sm btn-default edit_link" title="Редактировать">
+                                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                        Редактировать
+                                                    </a>
+                                                {% endif %}
+
+                                                {% if delete %}
+                                                    <a href="{{ path(delete,{id: item.id}) }}" class="btn btn-sm btn-default delete_link" title="Удалить">
+                                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                                        Удалить
+                                                    </a>
+                                                {% endif %}
+
+                                            </div>
+
+                                        </td>
+
+                                        <!-- END - fieldName: _action -->
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        &nbsp;Элементы отсутствуют
+                    {% endif %}
+                </div>
+                <div class="box-footer clearfix">
+                    {% include 'AdminBundle:Admin:pager.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

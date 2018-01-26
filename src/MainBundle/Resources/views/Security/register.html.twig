@@ -1,0 +1,135 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% form_theme form _self %}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <div class="form_error">
+            <ul>
+                {%- for error in errors -%}
+                    <li>{{ error.message }}</li>
+                {%- endfor -%}
+            </ul>
+        </div>
+    {%- endif -%}
+{%- endblock form_errors -%}
+
+{% block form_widget %}
+    {%- set type = type|default('text') -%}
+    <input type="{{ type }}" {{ block('widget_attributes') }} class="el-input" placeholder="{{ label|default(name)|humanize|trans }}" {% if value is not empty %}value="{{ value }}" {% endif %}>
+{% endblock %}
+
+{% block email_widget %}
+    {%- set type = type|default('email') -%}
+    {{ block('form_widget') }}
+{% endblock %}
+
+{% block password_widget %}
+    {%- set type = type|default('password') -%}
+    {{ block('form_widget') }}
+{% endblock %}
+
+{% block checkbox_widget %}
+    <input type="checkbox" {{ block('widget_attributes') }} class="js-checkbox" {% if value is not empty %}value="{{ value }}" {% endif %} >
+{% endblock %}
+
+{% block content %}
+    <section class="wrap-forgot">
+        <div class="mbox2">
+            <div class="forgot-content">
+                <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="registration-form">
+
+                    {{ form_widget(form._token) }}
+                    {{ form_widget(form.type) }}
+                    <div class="title"><h1>Регистрация</h1></div>
+
+                    <div class="form-field juridical_row">
+                        {{ form_widget(form.orgName) }}
+                        {{ form_errors(form.orgName) }}
+                    </div>
+                    <div class="form-field juridical_row">
+                        {{ form_widget(form.uriAddress) }}
+                        {{ form_errors(form.uriAddress) }}
+                    </div>
+                    <div class="form-field juridical_row">
+                        {{ form_widget(form.factAddress) }}
+                        {{ form_errors(form.factAddress) }}
+                    </div>
+                    <div class="form-field juridical_row">
+                        {{ form_widget(form.inn) }}
+                        {{ form_errors(form.inn) }}
+                    </div>
+                    <div class="form-field juridical_row">
+                        {{ form_widget(form.uriPhone) }}
+                        {{ form_errors(form.uriPhone) }}
+                    </div>
+                    <div class="title juridical_row">
+                        <h4>Банковские реквизиты:</h4>
+                    </div>
+                    <div class="form-field juridical_row">
+                        {{ form_widget(form.bankName) }}
+                        {{ form_errors(form.bankName) }}
+                    </div>
+                    <div class="form-field juridical_row">
+                        {{ form_widget(form.bankCheckingIndex) }}
+                        {{ form_errors(form.bankCheckingIndex) }}
+                    </div>
+                    <div class="form-field juridical_row">
+                        {{ form_widget(form.bankCorrespondentIndex) }}
+                        {{ form_errors(form.bankCorrespondentIndex) }}
+                    </div>
+                    <div class="form-field juridical_row">
+                        {{ form_widget(form.bankIndex) }}
+                        {{ form_errors(form.bankIndex) }}
+                    </div>
+                    <div class="title juridical_row">
+                        <h4>Контактное лицо:</h4>
+                    </div>
+
+                    <div class="form-field">
+                        {{ form_widget(form.firstname) }}
+                        {{ form_errors(form.firstname) }}
+                    </div>
+                    <div class="form-field">
+                        {{ form_widget(form.lastname) }}
+                        {{ form_errors(form.lastname) }}
+                    </div>
+                    <div class="form-field juridical_row">
+                        {{ form_widget(form.phone) }}
+                        {{ form_errors(form.phone) }}
+                    </div>
+                    <div class="form-field">
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+                    <div class="form-field">
+                        {{ form_widget(form.plainPassword.first) }}
+                        {{ form_errors(form.plainPassword.first) }}
+                    </div>
+                    <div class="form-field">
+                        {{ form_widget(form.plainPassword.second) }}
+                    </div>
+                    <div class="radio-row">
+                        <div class="form-field">
+                            <input type="radio" name="person" class="js-radio" id="natural" value="fiz" {% if form.type.vars.value == 'fiz' %}checked{% endif %}>
+                            <label for="natural">Физическое лицо</label>
+                        </div>
+                        <div class="form-field">
+                            <input type="radio" name="person" class="js-radio" id="juridical" value="uri" {% if form.type.vars.value == 'uri' %}checked{% endif %}>
+                            <label for="juridical">Юридическое лицо</label>
+                        </div>
+                    </div>
+                    <div class="form-field checkbox">
+                        {{ form_widget(form.useterms) }}
+                        <label for="fos_user_registration_form_useterms">Я принимаю условия Пользовательского соглашения</label>
+                    </div>
+                    <input type="submit" class="el-button" value="Регистрация">
+                </form>
+                <div class="links">
+                    <a href="{{ path('fos_user_security_login') }}">Уже есть акаунт?</a>
+                    <a href="{{ path('fos_user_resetting_request') }}">Восстановление пароля</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

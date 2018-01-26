@@ -1,0 +1,66 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <section class="wrap-category section-unmain-wrapper">
+        <div class="mbox2">
+            <div class="title"><h1>{{ page_title|trans }}</h1></div>
+            {{ page_text|raw }}
+            <form method="get">
+                <div class="sorting">
+                    <div class="sort-item">
+                        <span>Сортировка:</span>
+                        <select name="_sort" class="sort-by js_select">
+                            {% for key,par in sortParams %}
+                                <option value="{{ key ~ '_' ~ par.order }}" {{ sortParamsActive.sort == key and sortParamsActive.order == par.order ? 'selected="selected"' : '' }}>
+                                    {{ par.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="sort-item">
+                        <span>Показать:</span>
+                        <select name="_limit" class="number js_select">
+                            {% for l in limitParams %}
+                                <option value="{{ l }}" {{ l == limitParamsActive ? 'selected="selected"' : '' }}>{{ l }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div class="sales-list">
+                {% if objects.items %}
+                    <ul>
+                        {% for item in objects.items  %}
+                            <li>
+                                <div class="sale-item">
+                                    <div class="visible-overlay">
+                                        <a href="{{ path('catalog_unmain_section_product',{section_code: item.catalogSection.code, product_code: item.code}) }}" class="to-category">
+                                            <span class="pic">
+                                                <img src="{{ item.picture?item.picture|imagine_filter('product_block'):image_placeholder }}" alt="">
+                                            </span>
+                                            <p>{{ item.title }}</p>
+                                            <span class="price">{{ item.price|price }}</span>
+                                        </a>
+                                        <a href="{{ path('catalog_unmain_section_product',{section_code: item.catalogSection.code, product_code: item.code}) }}" class="to-basket el-button">
+                                            Подробнее
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    Товары отсутствуют
+                {% endif %}
+            </div>
+
+            {% include 'MainBundle:Default:pagination.html.twig' %}
+
+        </div>
+    </section>
+    {% if not page_text and params.config.global_seo_text is defined %}
+    <section class="about-block mbox2 section-unmain-wrapper">
+        {{ params.config.global_seo_text|raw }}
+    </section>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,111 @@
+{% extends 'MainBundle:Profile:base.html.twig' %}
+
+{% block cabinet_tab %}
+    <div class="cabinet-tab active">
+        <div class="history">
+            <h2 class="title title-left">История заказов</h2>
+            <div class="history-table">
+                {% if restrict_objects %}
+                    <div class="history-row history-header">
+                        <div class="history-col">№ заказа</div>
+                        <div class="history-col">Дата</div>
+                        <div class="history-col">Сумма</div>
+                        <div class="history-col">Статус</div>
+                        <div class="history-col">Детали</div>
+                    </div>
+                    {% for order in restrict_objects %}
+                        <div class="history-row">
+                            <div class="history-col">{{ order.object.id }}</div>
+                            <div class="history-col">{{ order.object.date|site_date }}</div>
+                            <div class="history-col"><div class="summ">{{ order.object.summ|price }}</div></div>
+                            <div class="history-col">{{ order.object.status|callback(status_callback) }}</div>
+                            <div class="history-col"><a href="#" class="details">Подробнее</a></div>
+                        </div>
+                        <div class="el-table">
+                            <div class="table-row table-header">
+                                <div class="table-col"></div>
+                                <div class="table-wrap-mobile">
+                                    <div class="table-col">Товар</div>
+                                    <div class="table-col">Цена</div>
+                                    <div class="table-col">Кол-во</div>
+                                    <div class="table-col">Сумма</div>
+                                </div>
+                            </div>
+                            {% for key, item in order.object.objects %}
+                                {% set link = 'javascript:void(0);' %}
+                                {% set product = order.basketElements[key].product is defined and order.basketElements[key].product ? order.basketElements[key].product : null %}
+                                {% if product.catalogSection is defined and product.catalogSection %}
+                                    {% set route_element = product.catalogSection.main ? 'catalog_main_section_product' : 'catalog_unmain_section_product' %}
+                                    {% set link = path(route_element, {section_code: product.catalogSection.code ,product_code: product.code }) %}
+                                {% endif %}
+
+                                <div class="table-row">
+                                    <div class="table-col">
+                                        <div class="photo">
+                                            {% if product.picture is defined and product.picture %}
+                                                <img src="{{ product.picture|imagine_filter('profile_product_block_mini') }}" alt="">
+                                            {% else %}
+                                                <img src="/placeholder.svg" alt="" />
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="table-wrap-mobile">
+                                        <div class="table-col">
+                                            <div class="name">
+                                                <a href="{{ link }}" target="_blank">
+                                                    {{ product.title is defined ? product.title : item.data.product.title is defined ? item.data.product.title : 'Товар удален' }}
+                                                </a>
+                                                <div class="order-profile-dop-info">
+                                                    {% if item.size.title is defined %}
+                                                        <p><span>Размер:</span> {{ item.size.title }}</p>
+                                                    {% endif %}
+                                                    {% if item.data.package.title is defined %}
+                                                        <p><span>Упаковка:</span> {{ item.data.package.title }}</p>
+                                                    {% endif %}
+                                                    {% if item.data.serv is defined and item.data.serv %}
+                                                        <p>
+                                                            <span>Дополнительно:</span>
+                                                        <ul>
+                                                            {% for serv in item.data.serv %}
+                                                                <li>
+                                                                    {{ serv.title }} <span>{{ serv.markup|price_markup }}</span>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                        </p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-col">
+                                            <div class="price">{{ item.price|price }}</div>
+                                        </div>
+                                        <div class="table-col">{{ item.count }}</div>
+                                        <div class="table-col">
+                                            <div class="summ">{{ (item.count*item.price)|price }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            {% if order.object.deliveryPrice %}
+                                <div class="table-row table-summ">
+                                    <div class="table-col">
+                                        Доставка: <span>{{ order.object.deliveryPrice|price }}</span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="table-row table-summ">
+                                <div class="table-col">
+                                    ИТОГО: <span>{{ order.object.summ|price }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div style="text-align: center;">Список пуст</div>
+                {% endif %}
+            </div>
+            {% include 'MainBundle:Default:pagination.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

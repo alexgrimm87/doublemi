@@ -1,0 +1,392 @@
+/*body{*/
+    /*padding-top: 50px;*/
+/*}*/
+
+/*@media (max-width: 978px) {*/
+    /*body{*/
+        /*padding-top: 0;*/
+    /*}*/
+/*}*/
+
+div.border {
+    border: 1px solid #DDDDDD;
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+}
+
+div.connection {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    width: 460px;
+    margin: -130px 0 0 -250px;
+    box-shadow: 2px 2px 10px #ccc;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+div.connection .control-group {
+    padding: 0 20px 0 20px;
+}
+
+div.connection .alert {
+    margin: 0 20px 20px 20px;
+}
+
+div.connection form {
+    padding-top: 15px;
+    margin-bottom: 0;
+}
+
+div.connection form .form-actions {
+    margin-bottom: 0;
+}
+
+div.connection .form-actions {
+    padding-left: 20px;
+}
+
+div.connection div input.big {
+    height: 35px;
+    font-size: 25px;
+}
+
+.admin-bc.admin-ba-no-side-menu div.container-fluid > div.content {
+    margin-left: 0;
+}
+
+
+
+div.admin-ba-field-inline-table input.title {
+    width: 100px;
+}
+
+div.admin-ba-field-inline-table textarea.title {
+    width: 150px;
+    height: 50px;
+}
+
+h4.filter_legend table {
+    margin: 10px 0;
+}
+
+
+.table-striped tbody tr.admin-ba-list-row-selected td, .table-striped tbody tr.admin-ba-list-row-selected th {
+    background-color: #E3F7FE;
+}
+
+table.admin-ba-list td img {
+    vertical-align: bottom
+}
+
+td.pager ul {
+    float: left;
+    list-style: none;
+    margin: 2px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td.pager ul li {
+    float: left;
+}
+
+td.pager ul li a {
+    border: 1px solid #cccccc;
+    line-height: 25px;
+    padding: 1px 8px 1px 8px;
+    margin: 2px;
+}
+
+div.admin-actions {
+    /*margin-top: 18px;*/
+    float: right
+}
+
+.admin-ba-action.btn:not(:hover) {
+    background: none;
+    color: inherit;
+}
+
+.admin-ba-list td.admin-ba-list-field a.admin-link-identifier {
+    font-weight: bold;
+}
+
+td.admin-ba-list-field.admin-ba-list-field-boolean i {
+    margin-right: 1ex;
+}
+td.admin-ba-list-field.admin-ba-list-field-boolean a:hover {
+    text-decoration: none;
+}
+
+td.admin-ba-list-field.admin-ba-list-field-currency,
+td.admin-ba-list-field.admin-ba-list-field-percent,
+td.admin-ba-list-field.admin-ba-list-field-integer {
+    text-align: right;
+}
+
+td.admin-ba-list-field.admin-ba-list-field-select {
+    text-align: center;
+}
+
+div.admin-ba-modal-edit-one-to-one td.admin-ba-list-field-batch,
+div.admin-ba-modal-edit-one-to-one div.admin-ba-list-actions,
+div.admin-ba-modal-edit-one-to-one th.admin-ba-list-field-header-batch {
+    display: none;
+}
+
+div.admin-ba-modal-edit-one-to-one div.admin-ba-list-actions {
+    display: none;
+}
+
+th.admin-ba-list-field-header-order-desc a,
+th.admin-ba-list-field-header-order-asc a {
+    position: relative;
+    margin-right: 10px;
+}
+
+th.admin-ba-list-field-header-order-asc a:hover:after,
+th.admin-ba-list-field-header-order-asc.admin-ba-list-field-order-active a:after,
+th.admin-ba-list-field-header-order-desc.admin-ba-list-field-order-active a:hover:after {
+    content: "";
+    display: block;
+    border-top: 4px solid black;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    margin-top: -1px;
+}
+
+th.admin-ba-list-field-header-order-desc a:hover:after,
+th.admin-ba-list-field-header-order-desc.admin-ba-list-field-order-active a:after,
+th.admin-ba-list-field-header-order-asc.admin-ba-list-field-order-active a:hover:after {
+    content: "";
+    display: block;
+    border-bottom: 4px solid black;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    border-top: 4px solid transparent;
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    margin-top: -5px;
+}
+
+em.admin-ba-field-help {
+    display: block;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+fieldset legend {
+    padding-left: 0;
+}
+
+select.admin-medium, textarea.admin-medium, input.admin-medium {
+    width: 400px;
+}
+
+textarea.admin-medium {
+    height: 125px;
+}
+
+input[type="file"] {
+    /*height: 34px;*/
+}
+
+.admin-ba-field-standard-natural .field-actions {
+    display: block;
+    margin-top: 5px;
+}
+
+.admin-ba-field-inline-table select.admin-medium,
+.admin-ba-field-inline-table textarea.admin-medium,
+.admin-ba-field-inline-table input.admin-medium {
+    width: 150px;
+}
+
+.admin-ba-view-title {
+    font-size: 19px;
+    line-height: 1;
+    color: #404040;
+    *padding: 0 0 5px 0;
+    *line-height: 1.5;
+}
+
+.admin-ba-view-title td, .admin-ba-view-title th {
+    border: 0;
+}
+
+.admin-ba-view-container th {
+    width: 130px;
+}
+
+.admin-ba-view-container td, .admin-ba-view-container th {
+    border-bottom: 0;
+    border-top: 1px solid #eee;
+}
+
+.admin-ba-view-container:nth-child(2n) td, .admin-ba-view-container:nth-child(2n) th {
+    background-color: #f9f9f9;
+}
+
+.admin-ba-view-container:nth-child(2n):hover td, .admin-ba-view-container:nth-child(2n):hover th {
+    background-color: #f5f5f5;
+}
+
+.admin-ba-view-container.history-audit-compare th {
+     width: 10%;
+}
+
+.admin-ba-view-container.history-audit-compare td {
+     width: 40%;
+}
+.admin-ba-view-container.history-audit-compare th.diff {
+     background: pink;
+}
+
+.container-fluid > .sidebar {
+    top: auto;
+}
+
+.admin-action-element.btn-group {
+    display: inline-block;
+    padding: 4px 10px 4px;
+    vertical-align: middle;
+}
+
+.admin-collection-add, .admin-collection-delete {
+    box-shadow: none;
+}
+
+.no-js .admin-collection-add, .no-js .admin-collection-delete {
+    display: none;
+}
+
+ul.inputs-list {
+    padding-left: 150px;
+}
+
+legend + .admin-ba-collapsed-fields {
+    margin-top: 18px;
+    -webkit-margin-top-collapse: separate;
+}
+
+legend.admin-ba-fieldset-collapsed-description + .admin-ba-collapsed-fields {
+    margin-top: 0;
+}
+
+.admin-ba-collapsed-fields > p {
+    margin-bottom: 18px;
+}
+
+.bordered-table tbody.ui-sortable tr {
+    cursor: move;
+}
+
+.admin-ba-fieldset-collapsed legend:before {
+    content: '+ ';
+}
+
+.admin-ba-collapsed-fields-close legend:before {
+    content: '- ';
+    padding-left: 5px;
+}
+
+.admin-preview-form-container fieldset, .admin-preview-form-container .tabbable {
+    display: none;
+}
+
+.pagination {
+    margin: 0;
+}
+
+.field-short-description {
+    min-width: 250px;
+    min-height: 18px;
+    display: block;
+    float: left;
+    background: #fefefe;
+    border: 1px solid #e9e9e9;
+    border-radius: 4px 4px 4px 4px;
+    list-style: none outside none;
+    margin: 0 15px 0 0;
+    padding: 4px 15px;
+}
+
+.inner-field-short-description {
+
+}
+
+.required:after {
+    content: '*';
+}
+
+.form-horizontal .control-group {
+    margin-bottom: 10px;
+}
+
+.noscript-warning {
+    background-color: #C70A0A;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 4px 0;
+    text-align: center;
+    width: 100%;
+}
+
+body.fixed .content-header .navbar.stuck {
+    position:fixed;
+    top:50px;
+    width: 100%;
+    margin-left: -15px;
+    z-index: 5;
+    border-radius: 0;
+}
+
+.admin-search-result-list > li {
+    word-wrap: break-word;
+}
+
+.form-actions.stuck {
+    position:fixed;
+    bottom:0;
+    width: 100%;
+    margin-left: -15px;
+    margin-bottom: 0;
+    z-index: 5;
+    border-radius: 0;
+}
+
+@media(max-width:768px) {
+    body.fixed .main-header {
+        position: relative;
+    }
+    body.fixed .content-wrapper,
+    body.fixed .right-side {
+        padding-top: 0;
+    }
+    body.fixed .content-header .navbar.stuck {
+        top: 0;
+        position: relative;
+        margin: 0;
+        width: 100%;
+    }
+    body.fixed .main-sidebar {
+        position: absolute;
+    }
+    /* disable slimScroll */
+    body.fixed .main-sidebar .slimScrollDiv,
+    body.fixed .main-sidebar .sidebar {
+        overflow: visible !important;
+        height: auto !important;
+    }
+    .navbar-custom-menu > .navbar-nav > li >.dropdown-menu {
+        width: auto !important;
+        min-width: 230px; /* width of the left sidebar */
+    }
+}

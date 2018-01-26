@@ -1,0 +1,56 @@
+{% extends 'AdminBundle:Admin:base.html.twig' %}
+
+{% block title %}
+    Настройки
+{% endblock title %}
+
+{% block admin_page_content_header %}
+    <span style="font-size: 26px;">Настройки</span>
+{% endblock admin_page_content_header %}
+
+{% block admin_page_content_content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="box box-primary">
+                <div class="box-body table-responsive no-padding">
+
+                    {% if admin.data.fileList %}
+                        <table class="table table-bordered table-striped admin-ba-list">
+                            <thead>
+                            <tr class="admin-ba-list-field-header">
+                                <th class="admin-ba-list-field-header-text">
+                                    Название
+                                </th>
+                                <th class="admin-ba-list-field-header-text " style="width: 300px; ">
+
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for key, item in admin.data.fileList %}
+                                <tr>
+                                    <td class="admin-ba-list-field admin-ba-list-field-text">
+                                        {{ item.name is defined ? item.name : key }}
+                                    </td>
+                                    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+                                        <div class="btn-group">
+                                            <a href="{{ path('admin_config',{file: key}) }}" class="btn btn-sm btn-default edit_link" title="Редактировать">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                Редактировать
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <!-- END - fieldName: _action -->
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        &nbsp;Элементы отсутствуют
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock admin_page_content_content %}

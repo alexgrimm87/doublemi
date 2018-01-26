@@ -1,0 +1,119 @@
+{% extends 'MainBundle:Default:base.html.twig' %}
+
+{% block content %}
+    <div class="{% block wrap_class_block %}blog{% endblock %} mbox2">
+        {% block content_inner %}
+            <div class="blog-main">
+                <h1>{{ page_title|trans }}</h1>
+                <div class="blog-items-wrap">
+                    {% for item in objects.items %}
+                        <div class="blog-item">
+                            <div class="blog-pic">
+                                <img src="{{ item.picture?item.picture|imagine_filter('blog_post_block'):'/placeholder.svg' }}" alt="">
+                            </div>
+                            <div class="blog-right">
+                                <div class="blog-title">
+                                    <h4 style="text-transform: none;">{{ item.title }}</h4>
+                                </div>
+                                <div class="blog-info">
+                                    <div class="blog-date">
+                                        <p>{{ item.created|site_date }}</p>
+                                    </div>
+                                    <ul class="blog-category">
+                                        {% for tag in item.tags %}
+                                            {% if tag.enabled %}
+                                                <li>
+                                                    <a href="{{ path(tag_path,{tag: tag.code}) }}">{{ tag.text }}</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="blog-content">
+                                    <p>{{ item.description }}</p>
+                                    <div class="read-more">
+                                        <a href="{{ path(post_path,{post: item.code}) }}" class="el-button">Подробнее</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        Статьи отсутствуют
+                    {% endfor %}
+                </div>
+
+                {% include 'MainBundle:Default:pagination.html.twig' %}
+
+            </div>
+        {% endblock %}
+        {% block blog_sidebar %}
+            <aside class="sidebar">
+                {% if favorite %}
+                    <h3 class="sidebar-title">Избранные посты</h3>
+                    {% for fav in favorite %}
+                        {% if loop.index == 1 %}
+                            <div class="sidebar-slider-wrap">
+                                <div class="sidebar-slider">
+                                    <a href="{{ path((fav.archive?'blog_archive_post':'blog_root_post'),{post: fav.code}) }}">
+                                        <div class="blog-pic">
+                                            <img src="{{ fav.picture?fav.picture|imagine_filter('blog_post_block'):'/placeholder.svg' }}" alt="">
+                                        </div>
+                                        <div class="blog-title">
+                                            <h5>{{ fav.title }}</h5>
+                                        </div>
+                                        <div class="blog-date">
+                                            <p>{{ fav.created|site_date }}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+
+                    <div class="favorites">
+                        {% for fav in favorite %}
+                            {% if loop.index > 1 %}
+                                <a href="{{ path((fav.archive?'blog_archive_post':'blog_root_post'),{post: fav.code}) }}" class="favorites-item">
+                                    <div class="favorites-pic">
+                                        <img src="{{ fav.picture?fav.picture|imagine_filter('blog_post_block_mini'):'/placeholder.svg' }}" alt="">
+                                    </div>
+                                    <div class="favorites-content">
+                                        <p>{{ fav.title }}</p>
+                                        <div class="favorites-date">
+                                            <p>{{ fav.created|site_date }}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if archive %}
+                <div class="archive">
+                    <h3 class="sidebar-title sidebar-title-border">Архив</h3>
+                    <ul>
+                        {% for row in archive %}
+                            <li><a href="{{ path('blog_archive_filter',{year: row.year, month: row.month }) }}">{{ ('month_' ~ row.month)|trans  }} {{ row.year }} ({{ row.cnt }})</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if tags %}
+                <div class="search-tag">
+                    <h3 class="sidebar-title sidebar-title-border">Поиск по тегам</h3>
+                    <ul>
+                        {% for tag in tags %}
+                            <li {{ tag == active_tag?'class="active"':'' }}>
+                                <a href="{{ path(tag_path,{tag: tag.code}) }}">{{ tag.text }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </aside>
+        {% endblock %}
+    </div>
+{% endblock content %}
